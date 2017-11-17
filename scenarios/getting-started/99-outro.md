@@ -1,0 +1,1 @@
+Now that you have an understanding of the projects you will use throughout this course, let's get started!

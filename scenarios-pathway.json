@@ -1,0 +1,16 @@
+{
+  "title": "Modernizing Legacy Apps with Red Hat OpenShift Application Runtimes",
+  "description": "Modernizing a legacy application in one big effort requires a lot of valuable resources from your organization. A better approach is to move existing apps to a modern deployment platform, implement DevOps processes, and incrementally replace old code with new functionality developed using modern techniques. It may sound challenging, but it doesn’t have to be! With this course you will learn how to bring new business value to existing applications by developing and deploying with modern architectures and frameworks",
+  "courses": [
+    {
+      "pathway_id": "scenarios",
+      "course_id": "getting-started",
+      "title": "Getting Started with this course"
+    },
+    {
+      "pathway_id": "scenarios",
+      "course_id": "moving-existing-apps",
+      "title": "Moving existing apps to the cloud"
+    }
+  ]
+}
