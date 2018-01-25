@@ -38,6 +38,10 @@ own values for the following URLs:\n\n \
 * **$OPENSHIFT_MASTER** - When you see this variable, replace it with the value of your own OpenShift master url, such \
 as `http://master.openshift.com:8443` (be sure to include the port!).\n\n');
 
+var prereqs = fs.readFileSync("prereqs.md");
+
+outstream.write(prereqs + "\n\n");
+
 function filter_katacoda(input) {
     return input
         .replace(new RegExp('/redhat-middleware-workshops/','g'), home_dir + '/')

@@ -6,6 +6,28 @@
 
  * **$OPENSHIFT_MASTER** - When you see this variable, replace it with the value of your own OpenShift master url, such as `http://master.openshift.com:8443` (be sure to include the port!).
 
+# Prerequisites
+
+TBD. This section will be filled out with requirements for installing
+several pieces of software before these instructions will work.
+
+## Source code for exercises
+
+The source code required for the exercises in this guide is in a
+_Git_ repository on `github.com`. To use this source code,
+you must _clone_ the repository into your `$HOME/projects` directory.
+
+For example, the following command will clone the source code into
+the appropriate directory for use with the guide:
+
+```
+git clone -b v1.0 https://github.com/RedHat-Middleware-Workshops/modernize-apps-labs $HOME/projects
+```
+
+There is also a _solution_ branch in this repository, which refers to
+the source code of the solution for each exercise. To access the solution,
+you can use `git checkout v1.0_solution`.
+
 # SCENARIO 1: Getting Started with this course
 
 * Purpose: Understand concepts in this workshop
@@ -246,8 +268,6 @@ You should see:
         +-- openshift
         +-- resources
         \-- webapp
-
-6 directories, 3 files
 ```
 
 This is a minimal Java EE project which uses [JAX-RS](https://docs.oracle.com/javaee/7/tutorial/jaxrs.htm) for building
@@ -267,26 +287,21 @@ to execute the RHAMT CLI and analyze the existing project:
 ~/rhamt-cli-4.0.0.Beta4/bin/rhamt-cli \
   --sourceMode \
   --input ~/projects/monolith \
-  --output ~/rhamt-report \
+  --output ~/rhamt-reports/monolith \
   --overwrite \
   --source weblogic \
-  --target eap:7
+  --target eap:7 \
+  --packages com.redhat weblogic
 ```### Run it!
 
 > Note the use of the ``--source`` and ``--target`` options. This allows you to target specific migration paths supported by RHMAT. Other
 migration paths include **IBM® WebSphere® Application Server** and **JBoss EAP** 5/6/7.
 
-**Wait for it to complete before continuing!**. You should see `Report created: /root/rhamt-report/index.html`.
+**Wait for it to complete before continuing!**. You should see `Report created: /root/rhamt-reports/monolith/index.html`.
 
 **3. View the results**
 
-The RHAMT CLI generated an HTML report. To view the report, first startup a simple web server in a separate terminal:
-
-```docker run --privileged -v ~/rhamt-report:/usr/share/nginx/html:ro,z -p 9000:80 -it nginx```### Run it!
-
-> **NOTE**: This command will not output anything
-
-Then [click to view the report](https://$OPENSHIFT_MASTER/)
+Next, [click to view the report](https://$OPENSHIFT_MASTER/monolith)
 
 You should see the landing page for the report:
 
@@ -312,6 +327,8 @@ The level of effort will vary greatly depending on the size and complexity of th
 
 There are several other sub-pages accessible by the menu near the top. Cick on each one and observe the results for each of these pages:
 
+* **All Applications** Provides a list of all applications scanned.
+* **Dashboard** Provides an overview for a specific application.
 * **Issues** Provides a concise summary of all issues that require attention.
 * **Application Details** provides a detailed overview of all resources found within the application that may need attention during the migration.
 * **Unparsable** shows all files that RHAMT could not parse in the expected format. For instance, a file with a .xml or .wsdl suffix is assumed to be an XML file. If the XML parser fails, the issue is reported here and also where the individual file is listed.
@@ -320,11 +337,6 @@ There are several other sub-pages accessible by the menu near the top. Cick on e
 * **EJBs** vontains a list of EJBs found within the application.
 * **JBPM** vontains all of the JBPM-related resources that were discovered during analysis.
 * **JPA** vontains details on all JPA-related resources that were found in the application.
-* **Hibernate** vontains details on all Hibernate-related resources that were found in the application.
-* **Server Resources** Displays all server resources (for example, JNDI resources) in the input application.
-* **Spring Beans** Contains a list of Spring beans found during the analysis.
-* **Hard-coded IP Addresses** Provides a list of all hard-coded IP addresses that were found in the application.
-* **Ignored Files** Lists the files found in the application that, based on certain rules and RHAMT configuration, were not processed. See the --userIgnorePath option for more information.
 * **About** Describes the current version of RHAMT and provides helpful links for further assistance.
 
 > Some of the above sections may not appear depending on what was detected in the project.
@@ -337,21 +349,16 @@ Now that you have the RHAMT report available, let's get to work migrating the ap
 
 In this step we will migrate some Weblogic-specific code in the app to use standard Java EE interfaces.
 
-**1. Open the file**
-
-Open the file `src/main/java/com/redhat/coolstore/utils/StartupListener.java` using this link.
-The first issue we will tackle is the one reporting the use of _Weblogic ApplicationLifecyleEvent_ and
-_Weblogic LifecycleListener_ in this file.
-The WebLogic `ApplicationLifecycleListener` abstract class is used to perform functions or schedule jobs at Oracle WebLogic Server start and stop. In this case we have
-code in the `postStart` and `preStop` methods which are executed after Weblogic starts up and before it shuts down, respectively.
-
 **1. Review the issue related to `ApplicationLifecycleListener`**
 
-[Open the Issues report](https://$OPENSHIFT_MASTER/reports/migration_issues.html):
+[Open the Issues report](https://$OPENSHIFT_MASTER/monolith/reports/migration_issues.html):
 
 ![Issues](../assets/moving-existing-apps/project-issues.png)
 
 RHAMT provides helpful links to understand the issue deeper and offer guidance for the migration.
+
+The WebLogic `ApplicationLifecycleListener` abstract class is used to perform functions or schedule jobs at Oracle WebLogic Server start and stop. In this case we have
+code in the `postStart` and `preStop` methods which are executed after Weblogic starts up and before it shuts down, respectively.
 
 In JBoss Enterprise Application Platform, there is no equivalent to intercept these events, but you can get equivalent functionality using a _Singleton EJB_ with standard annotations,
 as suggested in the issue in the RHAMT report.
@@ -361,57 +368,16 @@ bean at application start. We will similarly use the `@PostConstruct` and `@PreD
 methods to invoke at the start and end of the application lifecyle achieving the same result but without
 using proprietary interfaces.
 
-**2. Remove weblogic-specific `import` statements and inheritance**
+While the code in our startup and shutdown is very simple, in the real world this code may require additional thought as part of the migration. However,
+using this method makes the code much more portable.
 
-Open the file: `src/main/java/com/redhat/coolstore/utils/StartupListener.java`,
-and remove all instances of `import weblogic.x.y.z` at the top of the file. This ensures that our code will
-not compile or run until we complete the migration. Remove the import statements for `weblogic.application.ApplicationLifecycleEvent` and
-`weblogic.application.ApplicationLifecycleListener`.
+**2. Open the file**
 
-Next, remove the inherited class by removing `extends ApplicationLifecycleListener` from the class definition. We no longer need it.
+Open the file `src/main/java/com/redhat/coolstore/utils/StartupListener.java` using this link.
+The first issue we will tackle is the one reporting the use of _Weblogic ApplicationLifecyleEvent_ and
+_Weblogic LifecycleListener_ in this file.
 
-Finally change the method signatures for the `postStart` and `preStop` methods to remove the weblogic arguments and the `@Override`
-annotations since our methods no longer override the Weblogic-specific super class. The methods should look like:
-
-```
-public void postStart() { ... }
-public void preStop() { ... }
-```
-
-**3. Annotate the class**
-
-Add `@Startup` and `@Singleton` annotations to the class definition. These annotations tell the server to initialize the class
-at application server startup time, and declare it as a singleton so we only ever get 1 copy created.
-
-Also, don't forget to add new `import` statements for the class (while leaving the others as-is)
-
-```
-import javax.ejb.Startup;
-import javax.inject.Singleton;
-
-@Startup
-@Singleton
-public class StartupListener {
-```
-
-**4. Annotate the methods**
-
-Add the `@PostConstruct` and `@PreDestroy` annotations to each of the methods `postStart` and `preStop` to declare at which time they must be run. And don't forget
-the additional `import` statements!
-
-```
-...
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-...
-@PostConstruct
-public void postStart() { ... }
-
-@PreDestroy
-public void preStop() { ... }
-```
-
-The final class code should look like this (click **Copy To Editor** to automatically copy this to the editor and replace the entire code):
+Click **Copy To Editor** to make these changes:
 
 ```java
 package com.redhat.coolstore.utils;
@@ -443,21 +409,15 @@ public class StartupListener {
 }
 ```
 
-While the code in our startup and shutdown is very simple, in the real world this code may require additional thought as part of the migration. However,
-using this method makes the code much more portable.
+**3. Test the build**
 
-When we run our newly-migrated application later on, you'll be able to verify that the logic is executed at startup and shutdown, just as before on weblogic.
-
-## Test the build
-
-Build and package the app using Maven to make sure you code still compiles:
+Build and package the app using Maven to make sure the changed code still compiles:
 
 `mvn clean package`### Run it!
 
 If builds successfully (you will see `BUILD SUCCESS`), then let's move on to the next issue! If it does not compile,
 verify you made all the changes correctly and try the build again.
 
-Once it builds, let's move on to the next issue!
 
 ## Migrate Logging
 
@@ -471,35 +431,16 @@ localized message catalogs (hence the term _NonCatalog_).
 
 The WebLogic `NonCatalogLogger` is not supported on JBoss EAP (or any other Java EE platform), and should be migrated to a supported logging framework, such as the JDK Logger or JBoss Logging.
 
+We will use the standard Java Logging framework, a much more portable framework. The framework also
+[supports internationalization](https://docs.oracle.com/javase/8/docs/technotes/guides/logging/overview.html#a1.17) if needed.
+
 **1. Open the file**
 
 Click here to open the offending file `src/main/java/com/redhat/coolstore/service/OrderServiceMDB.java`
 
-**2. Remove weblogic-specific `import` statements and inheritance**
+**2. Make the changes**
 
-The first step is to remove all instances of `import weblogic.x.y.z` at the top of the file. This ensures that our code will
-not compile or run until we complete the migration. Remove the import statements for `import weblogic.i18n.logging.NonCatalogLogger;`.
-
-Next, change the type of the `log` class variable to be `Logger` and to initialize it with the name of the class:
-
-```java
-private Logger log = Logger.getLogger(OrderServiceMDB.class.getName());
-```
-
-Don't forget to add the new import statement at the top of the file:
-
-```java
-import java.util.logging.Logger;
-```
-
-This makes our class use the standard Java Logging framework, a much more portable framework. The framework also
-[supports internationalization](https://docs.oracle.com/javase/8/docs/technotes/guides/logging/overview.html#a1.17) if needed.
-
-Finally, notice that the use of the `log` class variable does not need to change as the method signatures are identical.
-For example, `log.info("Received order: " + orderStr);`. If your real world application used tons of Weblogic logging, at least
-you save some time here!
-
-The final class code should look like this (click **Copy To Editor** to automatically copy this to the editor and replace the entire code):
+Click **Copy To Editor** to make these changes:
 
 ```java
 package com.redhat.coolstore.service;
@@ -554,8 +495,6 @@ public class OrderServiceMDB implements MessageListener {
 }
 ```
 
-When we run our newly-migrated application later you will be able to verify the logging works correctly by inspecting the log file output.
-
 That one was pretty easy.
 
 ## Test the build
@@ -567,7 +506,6 @@ Build and package the app using Maven to make sure you code still compiles:
 If builds successfully (you will see `BUILD SUCCESS`), then let's move on to the next issue! If it does not compile,
 verify you made all the changes correctly and try the build again.
 
-Once it builds, let's move on to the next issue!
 
 ## Migrate JMS Topic
 
@@ -578,32 +516,13 @@ Our application uses [JMS](https://en.wikipedia.org/wiki/Java_Message_Service) t
 a JMS Topic, which is then consumed by listeners (subscribers) to that topic to process the order using [Message-driven beans](https://docs.oracle.com/javaee/6/tutorial/doc/gipko.html), a form
 of Enterprise JavaBeans (EJBs) that allow Java EE applications to process messages asynchronously.
 
-In this case, `InventoryNotificationMDB` is subscribed to and listening for messages from `ShoppingCartService.java`. When
+In this case, `InventoryNotificationMDB` is subscribed to and listening for messages from `ShoppingCartService`. When
 an order comes through the `ShoppingCartService`, a message is placed on the JMS Topic. At that point, the `InventoryNotificationMDB`
 receives a message and if the inventory service is below a pre-defined threshold, sends a message to the log indicating that
 the supplier of the product needs to be notified.
 
 Unfortunately this MDB was written a while ago and makes use of weblogic-proprietary interfaces to configure and operate the
 MDB. RHAMT has flagged this and reported it using a number of issues.
-
-**1. Review the issues**
-
-[Open the Issues report](https://$OPENSHIFT_MASTER/reports/migration_issues.html).
-
-In the list of issues for our migration, RHAMT has identified several issues with our use of weblogic MDB interfaces:
-
-* **Call of JNDI lookup** - Our apps use a weblogic-specific [JNDI](https://en.wikipedia.org/wiki/Java_Naming_and_Directory_Interface) lookup scheme.
-* **Proprietary InitialContext initialization** - Weblogic has a very different lookup mechanism for InitialContext objects
-* **WebLogic InitialContextFactory** - This is related to the above, essentially a Weblogic proprietary mechanism
-* **WebLogic T3 JNDI binding** - The way EJBs communicate in Weblogic is over T2, a proprietary implementation of Weblogic.
-
-All of the above interfaces have equivalents in JBoss, however they are greatly simplified and overkill for our application which uses
-JBoss EAP's internal message queue implementation provided by [Apache ActiveMQ Artemis](https://activemq.apache.org/artemis/).
-
-**2. Understand the changes necessary**
-
-Open `src/main/java/com/redhat/coolstore/service/InventoryNotificationMDB.java`. The main logic of this class is in the `onMessage` method.
- ll of the other code in the class is related to the initialization and lifecycle management of the MDB itself in the Weblogic environment, which we need to remove.
 
 JBoss EAP provides and even more efficient and declarative way
 to configure and manage the lifecycle of MDBs. In this case, we can use annotations to provide the necessary initialization
@@ -618,14 +537,27 @@ possibilities for EJBs and MDBs in this file, but luckily our application only u
 long to complete (over 30 seconds), then the transaction is rolled back and exceptions are thrown. This interface is
 Weblogic-specific so we'll need to find an equivalent in JBoss.
 
-> You should be aware that this type of migration is more involved than the previous migrations, and in real world applications
+> You should be aware that this type of migration is more involved than the previous steps, and in real world applications
 it will rarely be as simple as changing one line at a time for a migration. Consult the [RHAMT documentation](https://access.redhat.com/documentation/en/red-hat-application-migration-toolkit) for more detail on Red Hat's
 Application Migration strategies or contact your local Red Hat representative to learn more about how Red Hat can help you
 on your migration path.
 
-**3. Remove the Weblogic EJB Descriptor**
+**1. Review the issues**
 
-The first step is to remove the unneeded `weblogic-ejb-jar.xml` file. This file is not recognized or processed by JBoss
+From the [RHAMT Issues report](https://$OPENSHIFT_MASTER/monolith/reports/migration_issues.html)
+we will fix the remaining issues:
+
+* **Call of JNDI lookup** - Our apps use a weblogic-specific [JNDI](https://en.wikipedia.org/wiki/Java_Naming_and_Directory_Interface) lookup scheme.
+* **Proprietary InitialContext initialization** - Weblogic has a very different lookup mechanism for InitialContext objects
+* **WebLogic InitialContextFactory** - This is related to the above, essentially a Weblogic proprietary mechanism
+* **WebLogic T3 JNDI binding** - The way EJBs communicate in Weblogic is over T2, a proprietary implementation of Weblogic.
+
+All of the above interfaces have equivalents in JBoss, however they are greatly simplified and overkill for our application which uses
+JBoss EAP's internal message queue implementation provided by [Apache ActiveMQ Artemis](https://activemq.apache.org/artemis/).
+
+**2. Remove the weblogic EJB Descriptors**
+
+The first step is to remove the unneeded `weblogic-ejb-jar.xml` file. This file is proprietary to Weblogic and not recognized or processed by JBoss
 EAP. Type or click the following command to remove it:
 
 `rm -f src/main/webapp/WEB-INF/weblogic-ejb-jar.xml`### Run it!
@@ -635,45 +567,11 @@ Run or click on this command to remove them:
 
 `rm -rf src/main/java/weblogic`### Run it!
 
-**4. Remove unneeded class variables and methods**
+**3. Fix the code**
 
 Open `src/main/java/com/redhat/coolstore/service/InventoryNotificationMDB.java`.
 
-JBoss EAP and Java EE define a much richer and more efficient way to configure MDBs through annotations. You can remove
-the class variables `JNDI_FACTORY`, `JMS_FACTORY`, `TOPIC`, `tcon`, `tsession` and `tsubscriber` variables from near the
-top of the class definition.
-
-Also remove unneeded methods `init()`, `close()`, and `getInitialContext()`. This is handled by JBoss EAP internally.
-
-**5. Add MDB annotations**
-
-To properly initialize and allow JBoss EAP to manage the MDB, add the following annotations to the class definition.
-Don't forget the new import statements!
-
-```java
-import javax.ejb.ActivationConfigProperty;
-import javax.ejb.MessageDriven;
-
-...
-
-@MessageDriven(name = "InventoryNotificationMDB", activationConfig = {
-	@ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "topic/orders"),
-	@ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Topic"),
-	@ActivationConfigProperty(propertyName = "transactionTimeout", propertyValue = "30"),
-	@ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge")})
-public class OrderServiceMDB implements MessageListener {
-
-...
-
-```
-
-Remember the `<trans-timeout-seconds>` setting from the `weblogic-ejb-jar.xml` file? This is now set as an
-`@ActivationConfigProperty` above. There are pros and cons to using annotations vs. XML descriptors and care should be
-taken to consider the needs of the application.
-
-Your MDB should now be properly migrated to JBoss EAP.
-
-The final class code should look like this (click **Copy To Editor** to automatically copy this to the editor and replace the entire code):
+Click **Copy To Editor** to fix the code:
 
 ```java
 package com.redhat.coolstore.service;
@@ -731,10 +629,11 @@ public class InventoryNotificationMDB implements MessageListener {
 }
 ```
 
-When we run our newly-migrated application later you will be able to verify the inventory notification works correctly
-by inspecting the log file output.
+Remember the `<trans-timeout-seconds>` setting from the `weblogic-ejb-jar.xml` file? This is now set as an
+`@ActivationConfigProperty` in the new code. There are pros and cons to using annotations vs. XML descriptors and care should be
+taken to consider the needs of the application.
 
-We'll run the report again to verify our changes in the next step.
+Your MDB should now be properly migrated to JBoss EAP.
 
 ## Test the build
 
@@ -745,7 +644,6 @@ Build and package the app using Maven to make sure you code still compiles:
 If builds successfully (you will see `BUILD SUCCESS`), then let's move on to the next issue! If it does not compile,
 verify you made all the changes correctly and try the build again.
 
-Once it builds, let's move on to the next issue!
 
 ## Re-Run the RHAMT report
 
@@ -760,30 +658,18 @@ mvn clean && \
 ~/rhamt-cli-4.0.0.Beta4/bin/rhamt-cli \
   --sourceMode \
   --input ~/projects/monolith \
-  --output ~/rhamt-report \
+  --output ~/rhamt-reports/monolith \
   --overwrite \
   --source weblogic \
-  --target eap:7
+  --target eap:7 \
+  --packages com.redhat weblogic
 ```### Run it!
 
-**Wait for it to complete before continuing!**. You should see `Report created: /root/rhamt-report/index.html`.
+**Wait for it to complete before continuing!**. You should see `Report created: /root/rhamt-reports/monolith/index.html`.
 
 **2. View the results**
 
-The RHAMT CLI generates an updated HTML report.
-
-To view the updated report, first stop the web server:
-
-`clear`### Run it!
-
-Then start it again:
-
-`docker run --privileged -v ~/rhamt-report:/usr/share/nginx/html:ro,z -p 9000:80 -it nginx`### Run it!
-
-If this does not work you may need to manually click into the **Terminal 2** and type `CTRL-C` to stop the web server, then restart using
-the above command.
-
-Then [reload the report web page](https://$OPENSHIFT_MASTER/)
+[Reload the report web page](https://$OPENSHIFT_MASTER/monolith)
 
 And verify that it now reports 0 Story Points:
 
@@ -792,18 +678,12 @@ this app to JBoss EAP, congratulations!
 
 ![Issues](../assets/moving-existing-apps/project-issues-story.png)
 
-> You can ignore the remaining issues, as they are for informational purposes only.
-
-![Issues](../assets/moving-existing-apps/project-issues-gone.png)
-
 ## Migration Complete!
 
 Now that we've migrated the app, let's deploy it and test it out and start to explore some of the features that JBoss EAP
 plus Red Hat OpenShift bring to the table.
 
-## Before moving on
 
-Stop the report web server by clicking in **Terminal 2** and type CTRL-C to stop the server (or click this command: `clear`### Run it!)
 
 ## Migrate and run the project
 
@@ -898,7 +778,7 @@ Wait for a `BUILD SUCCESS` message. If it fails, check that you made all the cor
 
 We are now ready to deploy the application
 
-``mvn wildfly:run``### Run it!
+``export JBOSS_HOME=$HOME/jboss-eap-7.1 ; mvn wildfly:run``### Run it!
 
 Wait for the server to startup. You should see `Deployed "ROOT.war" (runtime-name: "ROOT.war")`
 ## Test the application
@@ -976,6 +856,9 @@ Click **Create Project**, fill in the fields, and click **Create**:
 * Name: `coolstore-dev`
 * Display Name: `Coolstore Monolith - Dev`
 * Description: _leave this field empty_
+
+> **NOTE**: YOU **MUST** USE `coolstore-dev` AS THE PROJECT NAME, as this name is referenced later
+on and you will experience failures if you do not name it `coolstore-dev`!
 
 ![OpenShift Console](../assets/moving-existing-apps/create-dialog.png)
 
@@ -1494,11 +1377,10 @@ Re-visit the app by reloading the Coolstore webpage (or clicking again on the [C
 
 You should now see the red header:
 
-> **NOTE** Some browsers (most, actually) will cache the web content including CSS files. If you don't see the read
-header or get errors, first try to reload the page a few times. If it still doesn't show the changed
-header you may need to [clear the browser
-cache](https://www.lifewire.com/how-to-clear-cache-2617980) to see the changes! You can also open a separate browser or
-an "incognito" or "private browsing" tab and visit the same URL.
+> **NOTE** If you don't see the red header, you may need to do a full reload of the webpage.
+On Windows/Linux press `CTRL`+`F5` or hold down `CTRL` and press the Reload button, or try
+`CTRL`+`SHIFT`+`F5`. On Mac OS X, press `SHIFT`+`CMD`+`R`, or hold `SHIFT` while pressing the
+Reload button.
 
 ![Red](../assets/developer-intro/nav-red.png)
 
@@ -1752,9 +1634,10 @@ Let's use our new `oc rsync` skills to re-deploy the app to the running containe
 After a few seconds, reload the [Coolstore Application](http://www-coolstore-dev.$OPENSHIFT_MASTER) in your browser
 and notice now the application behaves properly and displays `Inventory Unavailable` whereas before it was totally and confusingly blank:
 
-> **NOTE** Some browsers (most, actually) will cache the web content including CSS files. You may need to [clear the browser
-cache](https://www.lifewire.com/how-to-clear-cache-2617980) to see the changes! You can also open a separate browser or
-an "incognito" or "private browsing" tab and visit the same URL.
+> **NOTE** If you don't see the _Inventory Unavailable_ message, you may need to do a full reload of the webpage.
+On Windows/Linux press `CTRL`+`F5` or hold down `CTRL` and press the Reload button, or try
+`CTRL`+`SHIFT`+`F5`. On Mac OS X, press `SHIFT`+`CMD`+`R`, or hold `SHIFT` while pressing the
+Reload button.
 
 ![Bug fixed](../assets/developer-intro/debug-coolstore-bug-fixed.png)
 
@@ -2292,21 +2175,9 @@ name and database constraint and **@Id** marks the primary key for the table.
 WildFly Swarm configuration is done to a large extent through detecting the intent of the
 developer and automatically adding the required dependencies configurations to make sure it can
 get out of the way and developers can be productive with their code rather than Googling for
-configuration snippets. As an example, configuration database access with JPA is composed of
-the following steps:
-
-1. Adding the `org.wildfly.swarm:jpa` dependency to **pom.xml**
-2. Adding the database driver (e.g. `org.postgresql:postgresql`) to ** pom.xml**
-3. Adding database connection details in **src/main/resources/project-stages.yml**
-
-Examine `pom.xml` and note the `org.wildfly.swarm:jpa` that is already added to enable JPA:
-
-```xml
-<dependency>
-    <groupId>org.wildfly.swarm</groupId>
-    <artifactId>jpa</artifactId>
-</dependency>
-```
+configuration snippets. As an example, configuration database access with JPA is done
+by adding the JPA _fraction_ and a database driver to the `pom.xml`, and then configuring
+the database connection details in `src/main/resources/project-stages.yml`.
 
 Examine `src/main/resources/META-INF/persistence.xml` to see the JPA datasource configuration
 for this project. Also note that the configurations uses `src/main/resources/META-INF/load.sql` to import
@@ -4508,7 +4379,7 @@ In next step of this scenario, we will start implementing our rest endpoints.
 
 
 
-## Create a REST endpoints for /services/carts
+## Create REST endpoints for retrieving carts
 
 So now that you have learned how to create a rest service and also how to implement environmental specific configuration let's start building our rest endpoints. But before that lets discuss the `Router`, which is part of Vert.x Web.
 
@@ -4633,7 +4504,7 @@ You have now successfully implemented the first out of many endpoints that we ne
 
 In the next step we will implement another endpoint and this time it will also call out to an external service using rest.
 
-## Create a REST endpoints for /services/cart
+## Create REST endpoints for adding and deleting products
 
 In this step we will implement POST operation for adding a product. The UI in Coolstore Monolith uses a POST operation when a user clicks `Add to Cart`.
 
@@ -4894,7 +4765,7 @@ However, looking at the output you can see that the discount and shippingFee is 
 
 
 
-## Create a REST endpoints for /services/cart
+## Using the Vert.x Event Bus for shipping services
 
 In the previous steps we have added more and more functionality to the cart service and when we define our microservices it's often done using a domain model approach. The cart service is central, but we probably do not want it to handle things like calculating shipping fees. In our example we do not have enough data to do a complex shipping service since we lack information about the users shipping address as well as weight of the products etc. It does however make sense to create the shipping service so that if when we have that information we can extend upon it.
 
@@ -5108,16 +4979,8 @@ This should now return a new shopping cart where one only instance of the produc
 
 The CartService depends on the CatalogService and just like in the Spring Boot example we could have created mocks for calling the Catalog Service, however since our example is already complex, we will simply test it with the CatalogService running. 
 
-## Summary
 
-## Create a REST endpoints for /services/cart
-
-**Red Hat OpenShift Container Platform** is the preferred runtime for cloud native application development
-using **Red Hat OpenShift Application Runtimes**
-like **Spring Boot**. OpenShift Container Platform is based on **Kubernetes** which is the most used Orchestration
-for containers running in production. **OpenShift** is currently the only container platform based on Kubernetes
-that offers multi-tenancy. This means that developers can have their own personal isolated projects to test and
-verify applications before committing them to a shared code repository.
+## Create an OpenShift Project for the Cart microservice
 
 We have already deployed our coolstore monolith, inventory and catalog to OpenShift. In this step we will deploy our new Shopping Cart microservice for our CoolStore application,
 so let's create a separate project to house it and keep it separate from our monolith and our other microservices.
@@ -5143,12 +5006,12 @@ There's nothing there now, but that's about to change.
 
 
 
-## Create a REST endpoints for /services/cart
+## Deploy Cart microservice to OpenShift
 
 Now that you've logged into OpenShift, let's deploy our new cart microservice:
 
-
 **Update configuration**
+
 Create the file by clicking on open ``src/main/resources/config-openshift.json``
 
 Copy the following content to the file:
@@ -5244,20 +5107,16 @@ However, our monolih UI is still using its own built-in services. Wouldn't it be
 new services, **without changing any code**? That's next!
 
 
-## Create a REST endpoints for /services/cart
+## Replace (Strangle) monolith Cart services
 
-So far we haven't started [strangling the monolith](https://www.martinfowler.com/bliki/StranglerApplication.html). To do this
-we are going to make use of routing capabilities in OpenShift. Each external request coming into OpenShift (unless using
-ingress, which we are not) will pass through a route. In our monolith the web page uses client side REST calls to load
-different parts of pages.
+In earlier scenarios we started [strangling the monolith](https://www.martinfowler.com/bliki/StranglerApplication.html) by redirecting
+calls the product catalog microservice. We will now do the same with our new shopping cart microservice. To do this
+we are going to again make use of routing capabilities in OpenShift.
 
-For the home page the product list is loaded via a REST call to *http://<monolith-hostname>/services/products*. At the moment
-calls to that URL will still hit product catalog in the monolith. By using a
+Adding items to, or removing items from your cart in the monolith UI is accomplished via a REST call to `http://<monolith-hostname>/services/cart`. At the moment
+calls to that URL will still hit embedded cart service in the monolith. By using a
 [path based route](https://docs.openshift.com/container-platform/3.7/architecture/networking/routes.html#path-based-routes) in
-OpenShift we can route these calls to our newly created catalog services instead and end up with something like:
-
-![Greeting](../assets/mono-to-micro-part-2/goal.png)
-
+OpenShift we can route these calls to our newly created cart services instead, just like we did with the Catalog microservice!
 
 Flow the steps below to create a path based route.
 
@@ -5299,20 +5158,29 @@ Open the monolith UI and observe that the new catalog is being used along with t
 
 ![Greeting](../assets/mono-to-micro-part-2/coolstore-web.png)
 
+Add some items to your cart, then visit the **Shopping Cart** tab to observe the new shipping fees we hard-coded earlier:
+
+![Greeting](../assets/reactive-microservices/fees.png)
+
+The **Checkout** functionality is yet to be implemented, so won't work, but it's not too far away and if you have time
+after this workshop feel free to contribute the changes and make this workshop even better!
+
 ## Congratulations!
 
-You have now successfully begun to _strangle_ the monolith. Part of the monolith's functionality (Inventory and Catalog) are
-now implemented as microservices, without touching the monolith. But there's a few more things left to do, which we'll do in the
-next steps.
-
+You have now successfully begun to _strangle_ the monolith. Part of the monolith's functionality (Inventory, Catalog and Shopping Cart) are
+now implemented as microservices, without touching the monolith.
 
 ## Summary
 
 In this scenario, you learned a bit more about what Reactive Systems and Reactive programming are and why it's useful when building Microservices. Note that some of the code in here may have been hard to understand and part of that is that we are not using an IDE, like JBoss Developer Studio (based on Eclipse) or IntelliJ. Both of these have excellent tooling to build Vert.x applications. 
 
-You created a new product catalog microservice almost finalizing the migration from a monolith to microservices. There are a couple of things that are also required. Firstly the checkout of the shopping cart was never implemented, and secondly, the monolith also has an order service. These were removed from this exercise because of time constraints. You have however so far almost completed a migration, so good work. You deserve a promotion. :-)
+You created a new shopping cart microservice almost finalizing the migration from a monolith to microservices. There are a couple of things that are also required. Firstly the checkout of the shopping cart was never implemented, and secondly, the monolith also has an order service. These were removed from this exercise because of time constraints. You have however so far almost completed a migration, so good work. You deserve a promotion. :-)
 
-In the next chapter, we will talk more about how to make resilient microservices. 
+Your final strangled monolith now looks like:
+
+![Greeting](../assets/reactive-microservices/goal.png)
+
+In the next chapter, we will talk more about how to make these microservices more resilient.
 
 # SCENARIO 7: Prevent and detect issues in a distributed system
 
