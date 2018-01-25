@@ -1,0 +1,74 @@
+{
+    "pathwayTitle": "Modernizing Legacy Apps",
+    "icon": "fa-java",
+    "title": "Monolith to Microservices (Part 2)",
+    "description": "Showing developers and architects how Red Hat jumpstarts modernization",
+    "difficulty": "intermediate",
+    "time": "60-70 minutes",
+    "details": {
+        "steps": [
+            {
+                "title": "Examine the sample project",
+                "text": "01-review-the-intial-project.md"
+            },
+            {
+                "title": "Create Domain Objects",
+                "text": "02-database-repository.md"
+            },
+            {
+                "title": "Create Catalog Service",
+                "text": "03-creating-service-and-endpoint.md"
+            },
+            {
+                "title": "Get inventory data",
+                "text": "04-service-to-service-call.md"
+            },
+            {
+                "title": "Create a fallback for inventory",
+                "text": "05-fallback-for-services.md"
+            },
+            {
+                "title": "Test Locally",
+                "text": "06-test-local.md"
+            },
+            {
+                "title": "Create the OpenShift project",
+                "text": "07-create-project.md"
+            },
+            {
+                "title": "Deploy to OpenShift",
+                "text": "08-deploy-to-openshift.md"
+            },
+            {
+                "title": "Strangling the monolith",
+                "text": "09-strangling-the-monolith.md"
+            }
+        ],
+        "intro": {
+            "courseData": "run-init.sh",
+            "code": "set-env.sh",
+            "text": "00-intro.md"
+        },
+        "finish": {
+          "text": "99-outro.md"
+        },
+        "assets": {
+            "host01": [{"file": ".reset.sh", "target": "~/"}]
+        }
+    },
+    "files": [],
+    "environment": {
+        "uilayout": "editor-terminal",
+        "uisettings": "java",
+        "uieditorpath": "/root/projects/catalog",
+        "showdashboard": true,
+        "hideintro": false,
+        "dashboards": [{"name":"Local Web Browser","port":8081},{"name":"OpenShift Console","port":8443}],
+        "uimessage1": "\u001b[32mYour Interactive Bash Terminal. A safe place to learn and execute commands.\u001b[m\r\n"
+    },
+    "backend": {
+        "imageid": "openshift-modernize-apps",
+        "port": 8443
+    }
+}
+

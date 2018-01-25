@@ -4,32 +4,64 @@
     "title": "Moving an existing application to the cloud",
     "description": "",
     "difficulty": "intermediate",
-    "time": "20-30 minutes",
+    "time": "45 minutes",
     "details": {
         "steps": [
             {
-                "title": "Analying a Java EE app using Red Hat Application Migration Toolkit",
+                "title": "Analyzing a Java EE app using Red Hat Application Migration Toolkit",
                 "text": "01-analyze-with-rhamt.md"
+            },
+            {
+                "title": "Migrate Application Startup Code",
+                "text": "02-migrate-startup.md"
+            },
+            {
+                "title": "Migrate Logging",
+                "text": "03-migrate-logging.md"
+            },
+            {
+                "title": "Migrate JMS Topic",
+                "text": "04-migrate-jms.md"
+            },
+            {
+                "title": "Re-Run the RHAMT report",
+                "text": "05-rerun-rhamt.md"
+            },
+            {
+                "title": "Migrate and run the project",
+                "text": "06-run-the-migrated-application.md"
+            },
+            {
+                "title": "Deploy the monolith to OpenShift",
+                "text": "07-deploy-the-app-to-openshift.md"
             }
         ],
         "intro": {
             "courseData": "run-init.sh",
+            "code": "set-env.sh",
             "text": "00-intro.md"
         },
         "finish": {
           "text": "99-outro.md"
+        },
+        "assets": {
+            "host01": [{"file": ".reset.sh", "target": "~/"}]
         }
     },
+    "files": [
+
+    ],
     "environment": {
-        "uilayout": "terminal-iframe",
-        "uisettings": "javascript",
+        "uilayout": "editor-terminal",
+        "uisettings": "java",
+        "uieditorpath": "/root/projects/monolith",
         "showdashboard": true,
         "hideintro": false,
-        "dashboard": "Dashboard",
+        "dashboards": [{"name":"Local Web Browser","port":8080},{"name":"OpenShift Console","port":8443}],
         "uimessage1": "\u001b[32mYour Interactive Bash Terminal. A safe place to learn and execute commands.\u001b[m\r\n"
     },
     "backend": {
-        "imageid": "openshift-roadshow",
+        "imageid": "openshift-modernize-apps",
         "port": 8443
     }
 }

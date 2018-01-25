@@ -1,0 +1,53 @@
+.navbar.navbar-default.navbar-openshift .navbar-nav>li>a:hover {
+  background: none;
+}
+.navbar.navbar-default.navbar-openshift {
+  margin-bottom: 0;
+}
+.navbar-nav h2 {
+  margin: 0;
+}
+.nav.navbar-nav.navbar-quicklinks {
+  margin-left: -270px;
+}
+.navbar.navbar-default.navbar-openshift .navbar-brand {
+
+  background: transparent url(../static/openshift-logo-h-white.svg) no-repeat 50% 8px !important;
+  /* background: transparent url(/content/static/openshift-logo-h-white.svg) no-repeat 50% 8px !important; */
+  width: 220px !important;
+  margin-left: 20px;
+  margin-right: 15px;
+  padding-top: 22px;
+}
+.navbar.navbar-default.navbar-openshift .navbar-quicklinks li>a {
+  padding: 10px;
+}
+p.lead.intro {
+    padding-top: 60px;
+}
+
+.navbar.navbar-default.navbar-openshift {
+  background-color: #168F9D !important;
+}
+
+.navbar-brand {
+  height: 50px !important;
+}
+
+.navbar {
+  min-height: 54px !important;
+}
+
+.navbar-nav>li>a {
+  padding-top: 18px !important;
+  padding-bottom: 16px !important;
+}
+
+.navbar.navbar-default.navbar-openshift .navbar-right>li>a.nav-report-issue {
+  background: transparent url(../static/icon-report.svg) left 20px no-repeat;
+  background-size: 16px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: normal;
+  padding-left: 19px !important;
+}

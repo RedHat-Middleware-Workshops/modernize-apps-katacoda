@@ -1,0 +1,79 @@
+{
+    "pathwayTitle": "Modernizing Legacy Apps",
+    "icon": "fa-java",
+    "title": "Reactive Microservices",
+    "description": "Introduce event based architecture and develop use-cases for reactive microservices",
+    "difficulty": "advanced",
+    "time": "60-70 minutes",
+    "details": {
+        "steps": [
+            {
+                "title": "Examine the sample project",
+                "text": "01-examine-the-sample-project.md"
+            },
+            {
+                "title": "Create a web server and a simple rest service",
+                "text": "02-creating-simple-rest-service.md"
+            },
+            {
+                "title": "Setup environment specific configuration",
+                "text": "03-environment-specific-configuration.md"
+            },
+            {
+                "title": "Create REST endpoints for retrieving carts",
+                "text": "04-create-get-carts-endpoint.md"
+            },
+            {
+                "title": "Create REST endpoints for adding and deleting products",
+                "text": "05-create-post-item-endpoint.md"
+            },
+            {
+                "title": "Using the Vert.x Event Bus for shipping services",
+                "text": "06-create-a-shipping-service.md"
+            },
+            {
+                "title": "Create an OpenShift Project for the Cart microservice",
+                "text": "07-create-project.md"
+            },
+            {
+                "title": "Deploy Cart microservice to OpenShift",
+                "text": "08-deploy-to-openshift.md"
+            },
+            {
+                "title": "Replace (Strangle) monolith Cart services",
+                "text": "09-strangling-the-monolith.md"
+            }
+        ],
+        "intro": {
+            "courseData": "run-init.sh",
+            "code": "set-env.sh",
+            "text": "00-intro.md"
+        },
+        "finish": {
+          "text": "99-outro.md"
+        },
+        "assets": {
+            "host01": [{"file": ".reset.sh", "target": "~/"}]
+        }
+    },
+    "files": [
+        "./src/main/java/com/redhat/coolstore/CartServiceVerticle.java",
+        "./src/main/java/com/redhat/coolstore/MainVerticle.java",
+        "./src/main/java/com/redhat/coolstore/ShippingServiceVerticle.java",
+        "./src/main/resources/config-default.json",
+        "./src/main/resources/config-openshift.json"
+    ],
+    "environment": {
+        "uilayout": "editor-terminal",
+        "uisettings": "java",
+        "uieditorpath": "/root/projects/cart",
+        "showdashboard": true,
+        "hideintro": false,
+        "dashboards": [{"name":"Local Web Browser","port":8082},{"name":"OpenShift Console","port":8443}],
+        "uimessage1": "\u001b[32mYour Interactive Bash Terminal. A safe place to learn and execute commands.\u001b[m\r\n"
+    },
+    "backend": {
+        "imageid": "openshift-modernize-apps",
+        "port": 8443
+    }
+}

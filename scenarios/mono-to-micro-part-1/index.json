@@ -1,0 +1,85 @@
+{
+    "pathwayTitle": "Modernizing Legacy Apps",
+    "icon": "fa-java",
+    "title": "Monolith to Microservices (Part 1)",
+    "description": "Showing developers and architects how Red Hat jumpstarts modernization",
+    "difficulty": "intermediate",
+    "time": "45 minutes",
+    "details": {
+        "steps": [
+            {
+                "title": "Examine the sample project",
+                "text": "01-examine-the-sample-project.md"
+            },
+            {
+                "title": "Create Inventory Domain",
+                "text": "02-create-domain.md"
+            },
+            {
+                "title": "Create Inventory Service",
+                "text": "03-create-service.md"
+            },
+            {
+                "title": "Create RESTful Endpoints",
+                "text": "04-create-rest.md"
+            },
+            {
+                "title": "Test Locally",
+                "text": "05-test-local.md"
+            },
+            {
+                "title": "Create OpenShift Project",
+                "text": "06-create-project.md"
+            },
+            {
+                "title": "Deploy to OpenShift",
+                "text": "07-deploy-to-openshift.md"
+            },
+            {
+                "title": "Add Health Check Fraction",
+                "text": "08-add-fractions-for-health-check.md"
+            },
+            {
+                "title": "Define Health Check Endpoint",
+                "text": "09-define-health-check-endpoint.md"
+            },
+            {
+                "title": "Re-Deploy to OpenShift",
+                "text": "10-redeploy-to-openshift.md"
+            },
+            {
+                "title": "Exercise Health Check",
+                "text": "11-exercise-health-check.md"
+            }
+        ],
+        "intro": {
+            "courseData": "run-init.sh",
+            "code": "set-env.sh",
+            "text": "00-intro.md"
+        },
+        "finish": {
+          "text": "99-outro.md"
+        },
+        "assets": {
+            "host01": [{"file": ".reset.sh", "target": "~/"}]
+        }
+    },
+    "files": [
+        "./src/main/java/com/redhat/coolstore/model/Inventory.java",
+        "./src/main/java/com/redhat/coolstore/service/InventoryService.java",
+        "./src/main/java/com/redhat/coolstore/rest/InventoryEndpoint.java"
+    ],
+    "environment": {
+        "uilayout": "editor-terminal",
+        "uisettings": "java",
+        "uieditorpath": "/root/projects/inventory",
+        "showdashboard": true,
+        "hideintro": false,
+        "dashboards": [{"name":"Local Web Browser","port":8080},{"name":"OpenShift Console","port":8443}],
+        "uimessage1": "\u001b[32mYour Interactive Bash Terminal. A safe place to learn and execute commands.\u001b[m\r\n"
+    },
+    "backend": {
+        "imageid": "openshift-modernize-apps",
+        "port": 8443
+    }
+}

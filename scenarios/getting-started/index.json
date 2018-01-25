@@ -1,35 +1,44 @@
 {
-    "pathwayTitle": "Modernizing Legacy Apps with Red Hat OpenShift Application Runtimes",
+    "pathwayTitle": "Modernizing Legacy Apps",
     "icon": "fa-java",
-    "title": "Getting Started with the course environment",
-    "description": "",
+    "title": "Getting Started",
+    "description": "Understand concepts in this workshop",
     "difficulty": "beginner",
-    "time": "5-10 minutes",
+    "time": "5 minutes",
     "details": {
         "steps": [
             {
-                "title": "Explore Maven Projects",
-                "text": "02-maven-projects.md"
+                "title": "Understanding the Workshop Environment",
+                "text": "01-env.md"
+            },
+            {
+                "title": "Following the scenarios",
+                "text": "02-instructions.md"
             }
         ],
         "intro": {
             "courseData": "run-init.sh",
+            "code": "set-env.sh",
             "text": "00-intro.md"
         },
         "finish": {
           "text": "99-outro.md"
         }
     },
+    "files": [
+        "./hello.txt"
+    ],
     "environment": {
-        "uilayout": "terminal-iframe",
-        "uisettings": "javascript",
+        "uilayout": "editor-terminal",
+        "uisettings": "java",
+        "uieditorpath": "/root/projects",
         "showdashboard": true,
         "hideintro": false,
-        "dashboard": "Dashboard",
+        "dashboards": [{"name":"Local Web Browser","port":8080},{"name":"OpenShift Console","port":8443}],
         "uimessage1": "\u001b[32mYour Interactive Bash Terminal. A safe place to learn and execute commands.\u001b[m\r\n"
     },
     "backend": {
-        "imageid": "openshift-roadshow",
+        "imageid": "openshift-modernize-apps",
         "port": 8443
     }
 }

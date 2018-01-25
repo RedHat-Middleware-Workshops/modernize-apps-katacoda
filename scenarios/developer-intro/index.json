@@ -1,0 +1,71 @@
+{
+    "pathwayTitle": "Modernizing Legacy Apps",
+    "icon": "fa-java",
+    "title": "A Developer Introduction to OpenShift",
+    "description": "Learn how developing apps is easy and fun",
+    "difficulty": "intermediate",
+    "time": "45-60 minutes",
+    "details": {
+        "steps": [
+            {
+                "title": "Developer Concepts",
+                "text": "01-developer-concepts.md"
+            },
+            {
+                "title": "Verifying the Dev Environment",
+                "text": "02-verifying-dev.md"
+            },
+            {
+                "title": "Making Changes to Containers",
+                "text": "03-making-changes.md"
+            },
+            {
+                "title": "Live Synchronization of Project Files",
+                "text": "04-live-sync.md"
+            },
+            {
+                "title": "Debugging the App",
+                "text": "05-debugging.md"
+            },
+            {
+                "title": "Deploying the Production Environment",
+                "text": "06-deploy-prod.md"
+            },
+            {
+                "title": "Promoting Apps Across Environments with Pipelines",
+                "text": "07-pipeline-promotion.md"
+            },
+            {
+                "title": "Adding Pipeline Approval Steps",
+                "text": "08-pipeline-approval.md"
+            }
+        ],
+        "intro": {
+            "courseData": "run-init.sh",
+            "code": "set-env.sh",
+            "text": "00-intro.md"
+        },
+        "finish": {
+          "text": "99-outro.md"
+        },
+        "assets": {
+            "host01": [{"file": ".reset.sh", "target": "~/"}]
+        }
+    },
+    "files": [
+
+    ],
+    "environment": {
+        "uilayout": "editor-terminal",
+        "uisettings": "java",
+        "uieditorpath": "/root/projects/monolith",
+        "showdashboard": true,
+        "hideintro": false,
+        "dashboards": [{"name":"Local Web Browser","port":8080},{"name":"OpenShift Console","port":8443}],
+        "uimessage1": "\u001b[32mYour Interactive Bash Terminal. A safe place to learn and execute commands.\u001b[m\r\n"
+    },
+    "backend": {
+        "imageid": "openshift-modernize-apps",
+        "port": 8443
+    }
+}

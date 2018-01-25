@@ -1,0 +1,26 @@
+{{ template "templates/header.html" . }}
+
+<header class="masthead masthead-logo text-center">
+  <div class="container text-center">
+    <img class="logo-oso" src="https://www.openshift.com/images/logos/openshift/Logotype_RH_OpenShift_wLogo_RGB_White.svg" alt="Red Hat OpenShift Logo">
+    <h1>Modernizing Legacy Apps Roadshow</h1>
+    <p class="lead"></p>
+  </div>
+</header>
+
+<section class="text-center">
+  <div class="container">
+    <div class="row">
+      <div id="katacoda-terminal"
+        data-katacoda-id="redhat-middleware-workshops/training/{{ .Name }}/dashboard"
+        data-katacoda-color="#1a1a1a"
+        data-katacoda-secondary="#168F9D"
+        data-katacoda-background="#fff"
+        data-katacoda-font="Open Sans"
+        data-katacoda-fontheader="Open Sans" style="height:1400px;">
+      </div>
+    </div>
+  </div>
+</section>
+
+{{ template "templates/footer.html" . }}
