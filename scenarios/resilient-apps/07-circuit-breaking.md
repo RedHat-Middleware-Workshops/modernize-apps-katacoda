@@ -83,6 +83,10 @@ open the Grafana console:
 
 * [Grafana Dashboard](http://grafana-istio-system.[[HOST_SUBDOMAIN]]-80-[[KATACODA_HOST]].environments.katacoda.com/dashboard/db/istio-dashboard)
 
+>> **NOTE**: It make take 10-20 seconds before the evidence of the circuit breaker is visible
+within the Grafana dashboard, due to the not-quite-realtime nature of Prometheus metrics and Grafana
+refresh periods and general network latency.
+
 Notice at the top, the increase in the number of **5xxs Responses** at the top right of the dashboard:
 
 ![5xxs](/redhat-middleware-workshops/assets/resilient-apps/5xxs.png)

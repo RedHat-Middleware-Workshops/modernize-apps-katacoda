@@ -63,7 +63,7 @@
 
     ],
     "environment": {
-        "uilayout": "editor-terminal",
+        "uilayout": "terminal",
         "uisettings": "java",
         "uieditorpath": "/root/projects/monolith",
         "showdashboard": true,
