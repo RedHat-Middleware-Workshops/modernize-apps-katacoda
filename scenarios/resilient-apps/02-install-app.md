@@ -28,7 +28,7 @@ The end-to-end architecture of the application is shown below.
 
 Run the following command:
 
-`sh ~/install-sample-app.sh`{{execute}}
+`~/install-sample-app.sh`{{execute}}
 
 The application consists of the usual objects like Deployments, Services, and Routes.
 

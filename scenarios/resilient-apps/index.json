@@ -54,8 +54,8 @@
         },
         "assets": {
             "host01": [
-                {"file": "install-istio.sh", "target": "~/"},
-                {"file": "install-sample-app.sh", "target": "~/"}
+                {"file": "install-istio.sh", "target": "~/", "chmod": "+x"},
+                {"file": "install-sample-app.sh", "target": "~/", "chmod": "+x"}
             ]
         }
     },

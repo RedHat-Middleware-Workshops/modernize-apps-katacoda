@@ -19,7 +19,7 @@ to save memory and CPU. Execute this command to _scale_ the services down to 0 i
 
 Next, run the following command:
 
-`sh ~/install-istio.sh`{{execute}}
+`~/install-istio.sh`{{execute}}
 
 This command:
 
