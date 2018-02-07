@@ -79,7 +79,8 @@ We are now ready to build and test the project
 
 Our application is at this stage pretty standards based, but it needs two things. One is the  we need to add the JMS Topic since our application depends on it. 
 
-``mvn wildfly:start wildfly:add-resource wildfly:shutdown``{{execute T1}}
+`export JBOSS_HOME=$HOME/jboss-eap-7.1 ; \
+mvn wildfly:start wildfly:add-resource wildfly:shutdown`{{execute T1}}
 
 Wait for a `BUILD SUCCESS` message. If it fails, check that you made all the correct changes and try again!
 

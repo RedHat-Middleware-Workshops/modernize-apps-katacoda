@@ -93,6 +93,15 @@ It's blue! You can do this as many times as you wish, which is great for speedy 
 
 We'll leave the blue header for the moment, but will change it back to the original color soon.
 
+Because we used `oc rsync` to quickly re-deploy changes to the running pod, the changes will be lost if we restart the pod. Let's update the container image
+to contain our new blue header. Execute:
+
+`oc start-build coolstore --from-file=deployments/ROOT.war`{{execute}}
+
+And again, wait for it to complete by executing:
+
+`oc rollout status -w dc/coolstore`{{execute T1}}
+
 ## Before continuing
 
 Kill the `oc rsync` processes we started earlier in the background. Execute:
