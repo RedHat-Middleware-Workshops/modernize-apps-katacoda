@@ -30,7 +30,7 @@ You should see a listing of files in this directory **in the running container**
 destructive commands may do real harm, so be careful! In general it is not a good idea to operate inside immutable containers outside of the
 development environment. But for doing testing and debugging it's OK.
 
-Let's copy the EAP configuration in use so that we can inspect it. To copy files from a running container
+Let's copy some files out of the running container. To copy files from a running container
 on OpenShift, we'll use the `oc rsync` command. This command expects the name of the pod to copy from,
 which can be seen with this command:
 
@@ -56,20 +56,20 @@ Verify the variable holds the name of your pod with:
 
 Next, run the `oc rsync` command in your terminal window, using the new variable to refer to the name of the pod running our coolstore:
 
-`oc --server https://master:8443 rsync $COOLSTORE_DEV_POD_NAME:/opt/eap/standalone/configuration/standalone-openshift.xml .`{{execute}}
+`oc --server https://master:8443 rsync $COOLSTORE_DEV_POD_NAME:/opt/eap/version.txt .`{{execute}}
 
 The output will show that the file was downloaded:
 
 ```console
 receiving incremental file list
-standalone-openshift.xml
+version.txt
 
-sent 30 bytes  received 31,253 bytes  62,566.00 bytes/sec
-total size is 31,152  speedup is 1.00
+sent 30 bytes  received 65 bytes  62,566.00 bytes/sec
+total size is 65 speedup is 1.00
 ```
 
-Now you can open the file locally using this link: `standalone-openshift.xml`{{open}} and inspect
-its contents (don't worry if you don't understand the contents of this file, it is the JBoss EAP configuration file).
+Now you can open the file locally using this link: `version.txt`{{open}} and inspect
+its contents.
 
 This is useful for verifying that the contents of files in your applications are what you expect.
 
@@ -84,4 +84,4 @@ Manually copying is cool, but what about automatic live copying on change? That'
 
 Let's clean up the temp files we used. Execute:
 
-`rm -f standalone-openshift.xml hello.txt`{{execute}}
+`rm -f version.txt hello.txt`{{execute}}

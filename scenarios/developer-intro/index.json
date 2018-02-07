@@ -24,10 +24,6 @@
                 "text": "04-live-sync.md"
             },
             {
-                "title": "Debugging the App",
-                "text": "05-debugging.md"
-            },
-            {
                 "title": "Deploying the Production Environment",
                 "text": "06-deploy-prod.md"
             },
