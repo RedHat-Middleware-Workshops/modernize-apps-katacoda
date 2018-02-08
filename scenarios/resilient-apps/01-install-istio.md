@@ -9,20 +9,13 @@ Run the following to login as admin:
 
 **If you are unable to login as admin or get any failures, ask an instructor for help.**
 
-Because this scenario does not use any of the previous projects, let's shut down (but not delete) the services
-to save memory and CPU. Execute this command to _scale_ the services down to 0 instances each:
-
-`oc scale --replicas=0 dc/coolstore dc/coolstore-postgresql -n coolstore-dev ; \
- oc scale --replicas=0 dc/inventory dc/inventory-database -n inventory ; \
- oc scale --replicas=0 dc/catalog dc/catalog-database -n catalog ; \
- oc scale --replicas=0 dc/cart -n cart`{{execute}}
-
 Next, run the following command:
 
 `~/install-istio.sh`{{execute}}
 
 This command:
 
+* Shuts down pods from previous labs (cart, catalog, coolstore, etc)
 * Creates the project `istio-system` as the location to deploy all the components
 * Adds necessary permissions
 * Deploys Istio components
