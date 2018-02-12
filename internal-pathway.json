@@ -1,0 +1,11 @@
+{
+  "title": "Internal Middleware training for OpenShift Engineers",
+  "description": "",
+  "courses": [
+    {
+      "pathway_id": "scenarios",
+      "course_id": "moving-existing-apps",
+      "title": "Moving existing apps to the cloud"
+    }
+  ]
+}
