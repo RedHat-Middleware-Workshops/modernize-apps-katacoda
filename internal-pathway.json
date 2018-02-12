@@ -4,8 +4,8 @@
   "courses": [
     {
       "pathway_id": "scenarios",
-      "course_id": "moving-existing-apps",
-      "title": "Moving existing apps to the cloud"
+      "course_id": "internal-01-local-development",
+      "title": "Middleware training for OpenShift Engineers"
     }
   ]
 }
