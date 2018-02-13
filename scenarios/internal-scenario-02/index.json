@@ -1,5 +1,5 @@
 {
-    "pathwayTitle": "Modernizing Legacy Apps with Red Hat OpenShift Application Runtimes",
+    "pathwayTitle": "Internal Middleware training for OpenShift Engineers",
     "icon": "fa-java",
     "title": "Moving an existing application to the cloud",
     "description": "",
@@ -8,12 +8,28 @@
     "details": {
         "steps": [
             {
-                "title": "Analyzing a Java EE app using Red Hat Application Migration Toolkit",
-                "text": "01-deploy-your-first-app.md"
+                "title": "Local Java build",
+                "text": "01-local-build.md"
             },
             {
-                "title": "Migrate Application Startup Code",
-                "text": "02-run-locally.md"
+                "title": "Binary deployment",
+                "text": "02-binary-deployment.md"
+            },
+            {
+                "title": "Clustering",
+                "text": "03-clustering.md"
+            },
+            {
+                "title": "Java Messaging in Java EE",
+                "text": "04-messaging.md"
+            },
+            {
+                "title": "Round trip development",
+                "text": "05-round-trip-development.md"
+            },
+            {
+                "title": "Using a Jenkins Pipeline",
+                "text": "06-pipeline-development.md"
             }
         ],
         "intro": {
@@ -34,7 +50,7 @@
         "uieditorpath": "/root/projects/monolith",
         "showdashboard": true,
         "hideintro": false,
-        "dashboards": [{"name":"Local Web Browser","port":8080},{"name":"OpenShift Console","port":8443}],
+        "dashboards": [{"name":"OpenShift Console","port":8443}],
         "uimessage1": "\u001b[32mYour Interactive Bash Terminal. A safe place to learn and execute commands.\u001b[m\r\n"
     },
     "backend": {

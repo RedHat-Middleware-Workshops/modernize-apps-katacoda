@@ -62,4 +62,6 @@ do
   oc import-image $is --all --confirm --as=system:admin |& tee -a ${HOME}/.init.log
 done
 
+touch ${HOME}/.init.done
 echo "Done!" |& tee -a ${HOME}/.init.log
+
