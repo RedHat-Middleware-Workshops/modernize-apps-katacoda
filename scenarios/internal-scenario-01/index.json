@@ -1,7 +1,7 @@
 {
     "pathwayTitle": "Internal Middleware training for OpenShift Engineers",
     "icon": "fa-java",
-    "title": "Building a Java Application using S2I on OpenShift",
+    "title": "Building a Java Application using S2I and OpenShift",
     "description": "",
     "difficulty": "easy",
     "time": "15 minutes",
