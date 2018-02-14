@@ -12,7 +12,7 @@ Check the log file for the build to complete
 
 Notice all the "Downloading ..."??? We will come back to that later
 
-After the build completes waiting for the application to deploy
+After the build completes wait for the application to deploy, by running
 
 ``oc rollout status -w dc eap-app``{{execute interrupt}}
 
