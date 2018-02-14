@@ -17,11 +17,7 @@
             },
             {
                 "title": "Round trip development",
-                "text": "05-round-trip-development.md"
-            },
-            {
-                "title": "Using a Jenkins Pipeline",
-                "text": "06-pipeline-development.md"
+                "text": "03-round-trip-development.md"
             }
         ],
         "intro": {
