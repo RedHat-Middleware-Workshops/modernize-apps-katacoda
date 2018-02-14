@@ -28,11 +28,11 @@ to open the application in a browser tab so you can watch changes.
 First we need to save the name of the pod into an environment variable called `COOLSTORE_DEV_POD_NAME` so that we can use it for future
 commands:
 
-`export COOLSTORE_DEV_POD_NAME=$(oc get pods --selector deploymentconfig=coolstore -o jsonpath='{.items[?(@.status.phase=="Running")].metadata.name}')`{{execute T1}}
+`export COOLSTORE_DEV_POD_NAME=$(oc get pods --selector deploymentconfig=coolstore -o jsonpath='{.items[?(@.status.phase=="Running")].metadata.name}')`{{execute T2}}
 
 Verify the variable holds the name of your pod with:
 
-`echo $COOLSTORE_DEV_POD_NAME`{{execute T1}}
+`echo $COOLSTORE_DEV_POD_NAME`{{execute T2}}
 
 Turn on **Live sync** by executing this command:
 
