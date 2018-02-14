@@ -16,7 +16,7 @@ After the build completes wait for the application to deploy, by running
 
 ``oc rollout status -w dc eap-app``{{execute interrupt}}
 
-We can now access the application, either from OpenShift console or directly [here](http://coolstore-coolstore-s2i.[[HOST_SUBDOMAIN]]-80-[[KATACODA_HOST]].environments.katacoda.com)
+We can now access the application, either from OpenShift console or directly [here](http://eap-app-demo.[[HOST_SUBDOMAIN]]-80-[[KATACODA_HOST]].environments.katacoda.com)
 
 
 
