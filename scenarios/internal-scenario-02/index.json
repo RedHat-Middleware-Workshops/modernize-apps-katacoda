@@ -8,8 +8,8 @@
     "details": {
         "steps": [
             {
-                "title": "Local Java build",
-                "text": "01-local-build.md"
+                "title": "Deploying a real application using S2I and templates",
+                "text": "01-full-s2i-process.md"
             },
             {
                 "title": "Binary deployment",
