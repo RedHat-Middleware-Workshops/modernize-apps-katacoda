@@ -25,10 +25,10 @@ First, we need to create a new project
 ``oc new-project coolstore-s2i``{{execute T1}}
 
 Then, we need to create a service account for eap7
-``oc create serviceaccount eap7-service-account``{{excute T1}}
+``oc create serviceaccount eap7-service-account``{{execute T1}}
 
 We also link the serviceaccount to the project
-``oc policy add-role-to-user view system:serviceaccount:coolstore-s2i:eap7-service-account``{{exeute T1}}
+``oc policy add-role-to-user view system:serviceaccount:coolstore-s2i:eap7-service-account``{{execute T1}}
 
 Then we need to create a selfsigned certificate and store it in a keystore (requires more input)
 ``keytool -genkey -keyalg RSA -alias eapdemo-selfsigned -keystore keystore.jks -validity 360 -keysize 2048``{{execute T1}}
