@@ -1,0 +1,35 @@
+{
+    "pathwayTitle": "Internal Middleware training for OpenShift Engineers",
+    "icon": "fa-java",
+    "title": "Building a Java Application using S2I and OpenShift",
+    "description": "",
+    "difficulty": "easy",
+    "time": "15 minutes",
+    "details": {
+        "steps": [
+            {
+                "title": "Building a Java Application using S2I",
+                "text": "01-s2i-build-and-deploy.md"
+            }
+        ],
+        "intro": {
+            "text": "00-intro.md"
+        },
+        "finish": {
+          "text": "99-outro.md"
+        }
+    },
+    "files": [
+
+    ],
+    "environment": {
+        "uilayout": "terminal",
+        "showdashboard": true,
+        "hideintro": false,
+        "dashboards": [{"name":"OpenShift Console","port":8443}]
+    },
+    "backend": {
+        "imageid": "openshift-modernize-apps",
+        "port": 8443
+    }
+}

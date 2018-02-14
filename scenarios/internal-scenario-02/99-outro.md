@@ -1,0 +1,1 @@
+In this scenario, you've learned some different ways to build and deploy a Java EE application to OpenShift.

@@ -1,0 +1,48 @@
+{
+    "pathwayTitle": "Internal Middleware training for OpenShift Engineers",
+    "icon": "fa-java",
+    "title": "Moving an existing application to the cloud",
+    "description": "",
+    "difficulty": "intermediate",
+    "time": "45 minutes",
+    "details": {
+        "steps": [
+            {
+                "title": "Deploying a real application using S2I and templates",
+                "text": "01-full-s2i-process.md"
+            },
+            {
+                "title": "Binary deployment",
+                "text": "02-binary-deployment.md"
+            },
+            {
+                "title": "Round trip development",
+                "text": "03-round-trip-development.md"
+            }
+        ],
+        "intro": {
+            "courseData": "run-init.sh",
+            "code": "set-env.sh",
+            "text": "00-intro.md"
+        },
+        "finish": {
+          "text": "99-outro.md"
+        }
+    },
+    "files": [
+
+    ],
+    "environment": {
+        "uilayout": "editor-terminal",
+        "uisettings": "java",
+        "uieditorpath": "/root/projects/monolith",
+        "showdashboard": true,
+        "hideintro": false,
+        "dashboards": [{"name":"OpenShift Console","port":8443}],
+        "uimessage1": "\u001b[32mYour Interactive Bash Terminal. A safe place to learn and execute commands.\u001b[m\r\n"
+    },
+    "backend": {
+        "imageid": "openshift-modernize-apps",
+        "port": 8443
+    }
+}
