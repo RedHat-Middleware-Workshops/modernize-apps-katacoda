@@ -34,22 +34,6 @@
             {
                 "title": "Deploy to OpenShift",
                 "text": "07-deploy-to-openshift.md"
-            },
-            {
-                "title": "Add Health Check Fraction",
-                "text": "08-add-fractions-for-health-check.md"
-            },
-            {
-                "title": "Define Health Check Endpoint",
-                "text": "09-define-health-check-endpoint.md"
-            },
-            {
-                "title": "Re-Deploy to OpenShift",
-                "text": "10-redeploy-to-openshift.md"
-            },
-            {
-                "title": "Exercise Health Check",
-                "text": "11-exercise-health-check.md"
             }
         ],
         "intro": {
