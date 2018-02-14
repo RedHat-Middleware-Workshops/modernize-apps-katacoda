@@ -3,19 +3,19 @@
   "description": "",
   "courses": [
     {
-      "pathway_id": "redhat-middleware-workshops/scenarios",
+      "pathway_id": "redhat-middleware-workshops/internal-scenarios",
       "course_id": "internal-scenario-01",
       "id": "internal-scenario-01",
       "title": "01 - Java Developement and S2I"
     },
     {
-      "pathway_id": "redhat-middleware-workshops/scenarios",
+      "pathway_id": "redhat-middleware-workshops/internal-scenarios",
       "course_id": "internal-scenario-02",
       "id": "internal-scenario-02",
       "title": "02 - Working with a real life Java EE application"
     },
     {
-      "pathway_id": "redhat-middleware-workshops/scenarios",
+      "pathway_id": "redhat-middleware-workshops/internal-scenarios",
       "course_id": "internal-scenario-03",
       "id": "internal-scenario-03",
       "title": "03 - Microservices Development using RHOAR"
