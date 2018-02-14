@@ -16,14 +16,6 @@
                 "text": "02-binary-deployment.md"
             },
             {
-                "title": "Clustering",
-                "text": "03-clustering.md"
-            },
-            {
-                "title": "Java Messaging in Java EE",
-                "text": "04-messaging.md"
-            },
-            {
                 "title": "Round trip development",
                 "text": "05-round-trip-development.md"
             },
