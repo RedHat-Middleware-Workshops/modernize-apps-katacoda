@@ -12,7 +12,7 @@ And deploy the template:
 
 This will deploy both a PostgreSQL database and JBoss EAP, but it will not start a build for our application.
 
-Then [open up the Monolith Overview page](https://[[HOST_SUBDOMAIN]]-8443-[[KATACODA_HOST]].environments.katacoda.com/console/project/coolstore-dev/)
+Then [open up the Monolith Overview page](https://[[HOST_SUBDOMAIN]]-8443-[[KATACODA_HOST]].environments.katacoda.com/console/project/coolstore-bin/)
 and verify the monolith template items are created:
 
 ![OpenShift Console](/redhat-middleware-workshops/assets/moving-existing-apps/no-deployments.png)
