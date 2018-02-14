@@ -3,6 +3,7 @@ cd ${HOME}/projects/monolith
 git pull --quiet
 git checkout solution
 
+clear
 if [ ! -f ~/.init.done ]; then
   printf "Waiting for the Environment to configure."
   while [ ! -f ~/.init.done ]; do printf "."; sleep 3; done
