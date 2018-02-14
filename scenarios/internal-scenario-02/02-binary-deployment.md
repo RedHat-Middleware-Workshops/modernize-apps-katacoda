@@ -65,7 +65,7 @@ database and the monolith:
 
 ![OpenShift Console](/redhat-middleware-workshops/assets/moving-existing-apps/build-done.png)
 
-Test the application by clicking on the [Route link](http://www-coolstore-dev.[[HOST_SUBDOMAIN]]-80-[[KATACODA_HOST]].environments.katacoda.com),
+Test the application by clicking on the [Route link](http://www-coolstore-bin.[[HOST_SUBDOMAIN]]-80-[[KATACODA_HOST]].environments.katacoda.com),
 which will open the same monolith Coolstore in your browser, this time running on OpenShift:
 
 ![OpenShift Console](/redhat-middleware-workshops/assets/moving-existing-apps/route-link.png)
