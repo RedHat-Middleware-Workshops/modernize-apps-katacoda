@@ -5,7 +5,7 @@ ISTIO_HOME=${HOME}/istio-${ISTIO_VERSION}
 
 # shut down previous labs if needed
 oc get -n coolstore-dev dc/coolstore >& /dev/null && oc scale --replicas=0 dc/coolstore dc/coolstore-postgresql -n coolstore-dev ; \
-oc get -n coolstore-prod dc/coolstore-prod >& /dev/null && oc scale --replicas=0 dc/coolstore-prod dc/coolstore-postgresql -n coolstore-prod ; \
+oc get -n coolstore-prod dc/coolstore-prod >& /dev/null && oc scale --replicas=0 dc/coolstore-prod dc/coolstore-postgresql dc/jenkins -n coolstore-prod ; \
 oc get -n inventory dc/inventory >& /dev/null && oc scale --replicas=0 dc/inventory dc/inventory-database -n inventory ; \
 oc get -n catalog dc/catalog >& /dev/null && oc scale --replicas=0 dc/catalog dc/catalog-database -n catalog ; \
 oc get -n cart dc/cart >& /dev/null && oc scale --replicas=0 dc/cart -n cart
