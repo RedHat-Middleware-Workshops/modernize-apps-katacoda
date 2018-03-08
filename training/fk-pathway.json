@@ -1,0 +1,30 @@
+{
+  "title": "Monoliths to Microservices: Försäkringskassan",
+  "description": "",
+  "courses": [
+    {
+      "pathway_id": "redhat-middleware-workshops/scenarios",
+      "course_id": "getting-started",
+      "id": "getting-started",
+      "title": "Getting Started with this course"
+    },
+    {
+      "pathway_id": "redhat-middleware-workshops/scenarios",
+      "course_id": "moving-existing-apps",
+      "id": "moving-existing-apps",
+      "title": "Moving existing apps to the cloud"
+    },
+    {
+      "pathway_id": "redhat-middleware-workshops/scenarios",
+      "course_id": "developer-intro",
+      "id": "developer-intro",
+      "title": "A Developer Introduction to OpenShift"
+    },
+    {
+      "pathway_id": "redhat-middleware-workshops/scenarios",
+      "course_id": "mono-to-micro-part-1",
+      "id": "mono-to-micro-part-1",
+      "title": "Transforming an existing monolith (Part 1)"
+    }
+  ]
+}
