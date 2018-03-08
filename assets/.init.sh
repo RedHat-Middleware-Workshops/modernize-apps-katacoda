@@ -9,9 +9,7 @@ fi
 
 echo "The currently logged in to OpenShift as  $(oc whoami)" |& tee -a ${HOME}/.init.log
 if [ "$(oc whoami)" == "system:admin" ]; then
-  # Clean out extra directories that will cause the report generation to fail
-  find /root/rhamt-cli-4.0.0.Beta4 -name \*\._\* -print | xargs rm -f |& tee -a ${HOME}/.init.log
-  
+
   echo "Adding Policy rules" |& tee -a ${HOME}/.init.log
   oc adm policy add-role-to-user system:image-puller system:anonymous |& tee -a ${HOME}/.init.log
   oc adm policy add-cluster-role-to-user cluster-admin admin |& tee -a ${HOME}/.init.log

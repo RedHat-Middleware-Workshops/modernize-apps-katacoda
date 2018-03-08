@@ -6,7 +6,7 @@ Click on the below command to clean the old build artifacts and re-execute the R
 
 ```
 mvn clean && \
-~/rhamt-cli-4.0.0.Beta4/bin/rhamt-cli \
+~/rhamt-cli-4.0.0.Final/bin/rhamt-cli \
   --sourceMode \
   --input ~/projects/monolith \
   --output ~/rhamt-reports/monolith \
