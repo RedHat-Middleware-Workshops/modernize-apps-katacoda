@@ -24,7 +24,7 @@
       "pathway_id": "redhat-middleware-workshops/scenarios",
       "course_id": "mono-to-micro-part-1",
       "id": "mono-to-micro-part-1",
-      "title": "Transforming an existing monolith (Part 1)"
+      "title": "Transforming to Microservices using WildFly Swarm"
     }
   ]
 }
