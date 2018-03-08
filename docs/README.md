@@ -235,13 +235,13 @@ For this scenario, we will use the CLI as you are the only one that will run RHA
 
 The RHAMT CLI is has been installed for you. To verify that the tool was properly installed, run:
 
-`${HOME}/rhamt-cli-4.0.0.Beta4/bin/rhamt-cli --version`### Run it!
+`${HOME}/rhamt-cli-4.0.0.Final/bin/rhamt-cli --version`### Run it!
 
 You should see:
 
 ```
-Using RHAMT at /root/rhamt-cli-4.0.0.Beta4
-> Red Hat Application Migration Toolkit (RHAMT) CLI, version 4.0.0.Beta4.
+Using RHAMT at /root/rhamt-cli-4.0.0.Final
+> Red Hat Application Migration Toolkit (RHAMT) CLI, version 4.0.0.Final.
 ```
 
 **2. Inspect the project source code**
@@ -284,7 +284,7 @@ The RHAMT CLI has a number of options to control how it runs. Click on the below
 to execute the RHAMT CLI and analyze the existing project:
 
 ```
-~/rhamt-cli-4.0.0.Beta4/bin/rhamt-cli \
+~/rhamt-cli-4.0.0.Final/bin/rhamt-cli \
   --sourceMode \
   --input ~/projects/monolith \
   --output ~/rhamt-reports/monolith \
@@ -655,7 +655,7 @@ Click on the below command to clean the old build artifacts and re-execute the R
 
 ```
 mvn clean && \
-~/rhamt-cli-4.0.0.Beta4/bin/rhamt-cli \
+~/rhamt-cli-4.0.0.Final/bin/rhamt-cli \
   --sourceMode \
   --input ~/projects/monolith \
   --output ~/rhamt-reports/monolith \
@@ -768,7 +768,8 @@ We are now ready to build and test the project
 
 Our application is at this stage pretty standards based, but it needs two things. One is the  we need to add the JMS Topic since our application depends on it. 
 
-``mvn wildfly:start wildfly:add-resource wildfly:shutdown``### Run it!
+`export JBOSS_HOME=$HOME/jboss-eap-7.1 ; \
+mvn wildfly:start wildfly:add-resource wildfly:shutdown`### Run it!
 
 Wait for a `BUILD SUCCESS` message. If it fails, check that you made all the correct changes and try again!
 
@@ -980,9 +981,9 @@ it supports the end-to-end developer workflow.
 In the previous scenario you learned how to take an existing application to the cloud with JBoss EAP and OpenShift,
 and you got a glimpse into the power of OpenShift for existing applications.
 
-In this scenario you will go deeper into how to use the OpenShift Container Platform as a developer to build,
-deploy, and debug applications. We'll focus on the core features of OpenShift as it relates to developers, and
-you'll learn typical workflows for a developer (develop, build, test, deploy, debug, and repeat).
+In this scenario you will go deeper into how to use the OpenShift Container Platform as a developer to build
+and deploy applications. We'll focus on the core features of OpenShift as it relates to developers, and
+you'll learn typical workflows for a developer (develop, build, test, deploy, and repeat).
 
 ## Let's get started
 
@@ -1253,7 +1254,7 @@ You should see a listing of files in this directory **in the running container**
 destructive commands may do real harm, so be careful! In general it is not a good idea to operate inside immutable containers outside of the
 development environment. But for doing testing and debugging it's OK.
 
-Let's copy the EAP configuration in use so that we can inspect it. To copy files from a running container
+Let's copy some files out of the running container. To copy files from a running container
 on OpenShift, we'll use the `oc rsync` command. This command expects the name of the pod to copy from,
 which can be seen with this command:
 
@@ -1279,20 +1280,20 @@ Verify the variable holds the name of your pod with:
 
 Next, run the `oc rsync` command in your terminal window, using the new variable to refer to the name of the pod running our coolstore:
 
-`oc --server https://master:8443 rsync $COOLSTORE_DEV_POD_NAME:/opt/eap/standalone/configuration/standalone-openshift.xml .`### Run it!
+`oc --server https://master:8443 rsync $COOLSTORE_DEV_POD_NAME:/opt/eap/version.txt .`### Run it!
 
 The output will show that the file was downloaded:
 
 ```console
 receiving incremental file list
-standalone-openshift.xml
+version.txt
 
-sent 30 bytes  received 31,253 bytes  62,566.00 bytes/sec
-total size is 31,152  speedup is 1.00
+sent 30 bytes  received 65 bytes  62,566.00 bytes/sec
+total size is 65 speedup is 1.00
 ```
 
-Now you can open the file locally using this link: `standalone-openshift.xml` and inspect
-its contents (don't worry if you don't understand the contents of this file, it is the JBoss EAP configuration file).
+Now you can open the file locally using this link: `version.txt` and inspect
+its contents.
 
 This is useful for verifying that the contents of files in your applications are what you expect.
 
@@ -1307,7 +1308,7 @@ Manually copying is cool, but what about automatic live copying on change? That'
 
 Let's clean up the temp files we used. Execute:
 
-`rm -f standalone-openshift.xml hello.txt`### Run it!
+`rm -f version.txt hello.txt`### Run it!
 
 ## Live Synchronization of Project Files
 
@@ -1406,249 +1407,8 @@ It's blue! You can do this as many times as you wish, which is great for speedy 
 
 We'll leave the blue header for the moment, but will change it back to the original color soon.
 
-## Before continuing
-
-Kill the `oc rsync` processes we started earlier in the background. Execute:
-
-`kill %1`### Run it!
-
-On to the next challenge!
-
-## Debugging the App
-
-In this step you will debug the coolstore application using Java remote debugging and
-look into line-by-line code execution as the code runs inside a container on OpenShift.
-
-## Witness the bug
-
-The CoolStore application seem to have a bug that causes the inventory status for one of the
-products to be not shown at all. Carefully inspect the storefront page and notice that the
-Atari 2600 Joystick product shows nothing at all for inventory:
-
-![Inventory Status Bug](../assets/developer-intro/debug-coolstore-bug.png)
-
-Since the product list is provided by the monolith, take a look into the logs to see if there are any warnings:
-
-`oc --server https://master:8443 logs dc/coolstore | grep -i warning`### Run it!
-
-Oh! Something seems to be wrong with the inventory for the product id **444437**
-
-```console
-...
-WARNING [com.redhat.coolstore.utils.Transformers] (default task-83) Inventory for Atari 2600 Joystick[444437] unknown and missing
-...
-```
-
-## Check the REST API Response
-
-Invoke the Product Catalog API using `curl` for the suspect product id to see what actually
-happens when the UI tries to get the catalog:
-
-`curl http://www-coolstore-dev.$OPENSHIFT_MASTER/services/products/444437 ; echo`### Run it!
-
-The response clearly shows that the inventory values for `location` and `link` and `quantity` are not being returned properly (they should not be `null`):
-
-```json
-{"itemId":"444437","name":"Atari 2600 Joystick","desc":"Based on the original design of the joystick controller for the famed Atari 2600 console, the Joystick from Retro-Bit features a similar stick and single-button layout. ","price":240.0,"location":null,"quantity":0,"link":null}
-```
-
-Let's debug the app to get to the bottom of this!
-
-## Enable remote debugging
-
-Remote debugging is a useful debugging technique for application development which allows
-looking into the code that is being executed somewhere else on a different machine and
-execute the code line-by-line to help investigate bugs and issues. Remote debugging is
-part of  Java SE standard debugging architecture which you can learn more about it in [Java SE docs](https://docs.oracle.com/javase/8/docs/technotes/guides/jpda/architecture.html).
-
-The EAP image on OpenShift has built-in support for remote debugging and it can be enabled
-by setting the `JAVA_OPTS_APPEND` environment variables on the deployment config for the pod
-that you want to remotely debug. This will pass additional variables to the JVM when it starts up.
-
-`oc set env dc/coolstore JAVA_OPTS_APPEND="-Xdebug -Xnoagent -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n"`### Run it!
-
-This will cause a re-deployment of the app to enable the remote debugging agent on TCP port 8787.
-
-Wait for the re-deployment to complete before continuing by executing:
-
-`oc rollout status -w dc/coolstore && sleep 10`### Run it!
-
-The re-deployment also invoked a new pod, so let's update our environment variable again:
-
-`export COOLSTORE_DEV_POD_NAME=$(oc get pods --selector deploymentconfig=coolstore -o jsonpath='{.items[?(@.status.phase=="Running")].metadata.name}')`### Run it!
-
-Verify the variable holds the name of your new pod with:
-
-`echo $COOLSTORE_DEV_POD_NAME`### Run it!
-
-## Expose debug port locally
-
-Next, let's use `oc port-forward` to enable us to connect to `localhost:8787` to debug. Without this,
-we would have to expose the running app to everyone outside the OpenShift cluster, so instead we
-will just open it for ourselves with `oc port-forward`.
-
-Execute:
-
-`oc --server https://master:8443 port-forward $COOLSTORE_DEV_POD_NAME 8787 &`### Run it!
-
-This will forward traffic to/from the container's port 8787 to your `localhost` port 8787.
-
-You are all set now to start debugging using the tools of you choice.
-
-Remote debugging can be done using the widely available
-Java Debugger (`jdb`) command line or any modern IDE like **JBoss
-Developer Studio (Eclipse)** and **IntelliJ IDEA**.
-
-## Use `jdb` to debug
-
-The [Java Debugger (JDB)](http://docs.oracle.com/javase/8/docs/technotes/tools/windows/jdb.html)
-is a simple command-line debugger for Java. The `jdb` command is included by default in
-Java SE and provides inspection and debugging of a local or remote JVM. Although JDB is not
-the most convenient way to debug Java code, it's a handy tool since it can be run on any environment
-that Java SE is available.
-
-The instructions in this section focuses on using JDB however if you are familiar with JBoss Developer
-Studio, Eclipse or IntelliJ you can use them for remote debugging.
-
-Start JDB by pointing at the folder containing the Java source code for the application under debug:
-
-`jdb -attach localhost:8787 -sourcepath :src/main/java/`### Run it!
-
-## Add a breakpoint
-
-Now that you are connected to the JVM running inside the Coolstore pod on OpenShift, add
-a breakpoint to pause the code execution when it reaches the Java method handling the
-REST API `/services/products` Review the `src/main/java/com/redhat/coolstore/service/ProductService.java` class and note that the
-`getProductByItemId()` is the method where you should add the breakpoint.
-
-Add a breakpoint by executing:
-
-`stop in com.redhat.coolstore.service.ProductService.getProductByItemId`### Run it!
-
-## Trigger the bug again
-
-In order to pause code execution at the breakpoint, you have to invoke the REST API once more.
-
-Execute:
-
-`curl http://www-coolstore-dev.$OPENSHIFT_MASTER/services/products/444437`### Run it! to invoke the REST API in a separate terminal:
-
-> This command will trigger the breakpoint, and as a result will timeout, which you can ignore.
-
-The code execution pauses at the `getProductByItemId()` method. You can verify it
-using the `list`### Run it! command to see the source code in the terminal window where
-you started JDB. The arrow shows which line is to execute next:
-
-`list`### Run it!
-
-You'll see an output similar to this.
-
-```
-default task-3[1] list
-24            return cm.getCatalogItems().stream().map(entity -> toProduct(entity)).collect(Collectors.toList());
-25        }
-26
-27        public Product getProductByItemId(String itemId) {
-28 =>         CatalogItemEntity entity = cm.getCatalogItemById(itemId);
-29            if (entity == null)
-30                return null;
-31            return Transformers.toProduct(entity);
-32        }
-33
-```
-
-Execute one line of code using `next` command so the the CatalogItemEntity object is
-retrieved from the database.
-
-`next`### Run it!
-
-Use `locals` command to see the local variables and verify the retrieved
-object from the database.
-
-`locals`### Run it!
-
-You'll see an output similar to this.
-
-```
-default task-2[1] locals
-Method arguments:
-itemId = "444437"
-Local variables:
-entity = instance of com.redhat.coolstore.model.CatalogItemEntity(id=20281)
-```
-
-Look at the value of the `entity` variable using the `print` command:
-
-`print entity`### Run it!
-
-```
- entity = "ProductImpl [itemId=444437, name=Atari 2600 Joystick, desc=Based on the original design of the joystick controller for the famed Atari 2600 console, the Joystick from Retro-Bit features a similar stick and single-button layout. , price=240.0]"
-```
-
-Looks good so far. What about the `inventory` object that's part of this object? Execute:
-
-`print entity.getInventory()`### Run it!
-
-```
- entity.getInventory() = null
-```
-
-Oh! Did you notice the problem?
-
-The `inventory` object which is the object retrieved from the database
-for the provided product id is `null` and is returned as the REST response! The non-existing
-product id is not a problem on its own because it simply could mean this product is discontinued
-and removed from the Inventory database but it's not removed from the product catalog database
-yet. The bug is however caused because the code returns this `null` value instead of a sensible
-REST response. If the product id does not exist, a proper JSON response stating a zero inventory
-should be returned instead of `null`
-
-Exit the debugger using the `quit` command:
-
-`quit`### Run it!
-
-## Fix the code
-
-Open `src/main/java/com/redhat/coolstore/utils/Transformers.java`. We'll add some code to add in
-a sensible value for an Inventory in case it is not there. To make this change, add in this code to the end
-of the `toProduct` method (or simply click **Copy to Editor** to do it for you):
-
-
-```java
-        // Add inventory if needed and return entity
-            prod.setLink("http://redhat.com");
-            prod.setLocation("Unavailable");
-            prod.setQuantity(0);
-```
-
-## Re-build and redeploy the application
-
-With our code fix in place, let's re-build the application to test it out. To rebuild, execute:
-
-`mvn clean package -Popenshift`### Run it!
-
-Let's use our new `oc rsync` skills to re-deploy the app to the running container. Execute:
-
-`oc --server https://master:8443 rsync deployments/ $COOLSTORE_DEV_POD_NAME:/deployments --no-perms`### Run it!
-
-After a few seconds, reload the [Coolstore Application](http://www-coolstore-dev.$OPENSHIFT_MASTER) in your browser
-and notice now the application behaves properly and displays `Inventory Unavailable` whereas before it was totally and confusingly blank:
-
-> **NOTE** If you don't see the _Inventory Unavailable_ message, you may need to do a full reload of the webpage.
-On Windows/Linux press `CTRL`+`F5` or hold down `CTRL` and press the Reload button, or try
-`CTRL`+`SHIFT`+`F5`. On Mac OS X, press `SHIFT`+`CMD`+`R`, or hold `SHIFT` while pressing the
-Reload button.
-
-![Bug fixed](../assets/developer-intro/debug-coolstore-bug-fixed.png)
-
-Well done, you've fixed the bug using your new debugging skills and saved the world!
-
-Let's kill the `oc port-forward` processes we started earlier in the background. Execute:
-
-`kill %1`### Run it!
-
-Because we used `oc rsync` to re-deploy the bugfix to the running pod, it will not survive if we restart the pod. Let's update the container image
-to contain our new fix (keeping the blue header for now). Execute:
+Because we used `oc rsync` to quickly re-deploy changes to the running pod, the changes will be lost if we restart the pod. Let's update the container image
+to contain our new blue header. Execute:
 
 `oc start-build coolstore --from-file=deployments/ROOT.war`### Run it!
 
@@ -1656,9 +1416,13 @@ And again, wait for it to complete by executing:
 
 `oc rollout status -w dc/coolstore`### Run it!
 
-## Congratulations!
+## Before continuing
 
-Congratulations on completing this step! On to the next challenge!
+Kill the `oc rsync` processes we started earlier in the background. Execute:
+
+`kill %1`### Run it!
+
+On to the next challenge!
 
 ## Deploying the Production Environment
 
@@ -1960,7 +1724,7 @@ You have added a human approval step for all future developer changes. You now h
 ## Summary
 
 In this scenario you learned how to use the OpenShift Container Platform as a developer to build,
-deploy, and debug applications. You also learned how OpenShift makes your life easier as a developer,
+and deploy applications. You also learned how OpenShift makes your life easier as a developer,
 architect, and DevOps engineer.
 
 You can use these techniques in future projects to modernize your existing applications and add
@@ -5248,20 +5012,13 @@ Run the following to login as admin:
 
 **If you are unable to login as admin or get any failures, ask an instructor for help.**
 
-Because this scenario does not use any of the previous projects, let's shut down (but not delete) the services
-to save memory and CPU. Execute this command to _scale_ the services down to 0 instances each:
-
-`oc scale --replicas=0 dc/coolstore dc/coolstore-postgresql -n coolstore-dev ; \
- oc scale --replicas=0 dc/inventory dc/inventory-database -n inventory ; \
- oc scale --replicas=0 dc/catalog dc/catalog-database -n catalog ; \
- oc scale --replicas=0 dc/cart -n cart`### Run it!
-
 Next, run the following command:
 
-`sh ~/install-istio.sh`### Run it!
+`~/install-istio.sh`### Run it!
 
 This command:
 
+* Shuts down pods from previous labs (cart, catalog, coolstore, etc)
 * Creates the project `istio-system` as the location to deploy all the components
 * Adds necessary permissions
 * Deploys Istio components
@@ -5358,7 +5115,7 @@ The end-to-end architecture of the application is shown below.
 
 Run the following command:
 
-`sh ~/install-sample-app.sh`### Run it!
+`~/install-sample-app.sh`### Run it!
 
 The application consists of the usual objects like Deployments, Services, and Routes.
 
@@ -5576,7 +5333,7 @@ versions of a service in a random fashion, and anytime you hit `v1` version you'
 
 First, let's set an environment variable to point to Istio:
 
-`export ISTIO_VERSION=0.4.0; export ISTIO_HOME=${HOME}/istio-${ISTIO_VERSION}; export PATH=${PATH}:${ISTIO_HOME}/bin; cd ${ISTIO_HOME}`### Run it!
+`export ISTIO_VERSION=0.6.0; export ISTIO_HOME=${HOME}/istio-${ISTIO_VERSION}; export PATH=${PATH}:${ISTIO_HOME}/bin; cd ${ISTIO_HOME}`### Run it!
 
 Now let's install a default set of routing rules which will direct all traffic to the `reviews:v1` service version:
 
@@ -5946,6 +5703,10 @@ open the Grafana console:
 
 * [Grafana Dashboard](http://grafana-istio-system.$OPENSHIFT_MASTER/dashboard/db/istio-dashboard)
 
+>> **NOTE**: It make take 10-20 seconds before the evidence of the circuit breaker is visible
+within the Grafana dashboard, due to the not-quite-realtime nature of Prometheus metrics and Grafana
+refresh periods and general network latency.
+
 Notice at the top, the increase in the number of **5xxs Responses** at the top right of the dashboard:
 
 ![5xxs](../assets/resilient-apps/5xxs.png)
@@ -6083,7 +5844,7 @@ Before moving on, in case your simulated user loads are still running, kill them
 ## More references
 
 * [Istio Documentation](https://istio.io/docs)
-* [Christian Post's Blog on Envoy and Circuit Breaking](http://blog.christianposta.com/microservices/01-microservices-patterns-with-envoy-proxy-part-i-circuit-breaking/)
+* [Christian Posta's Blog on Envoy and Circuit Breaking](http://blog.christianposta.com/microservices/01-microservices-patterns-with-envoy-proxy-part-i-circuit-breaking/)
 
 
 ## Rate Limiting
