@@ -34,6 +34,12 @@
     },
     {
       "pathway_id": "redhat-middleware-workshops/scenarios",
+      "course_id": "reactive-microservices",
+      "id": "reactive-microservices",
+      "title": "Building Reactive Microservices"
+    },
+    {
+      "pathway_id": "redhat-middleware-workshops/scenarios",
       "course_id": "resilient-apps",
       "id": "resilient-apps",
       "title": "Prevent and detect issues in a distributed system"
