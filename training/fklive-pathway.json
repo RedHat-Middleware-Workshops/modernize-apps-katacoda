@@ -1,5 +1,5 @@
 {
-  "title": "Monoliths to Microservices: App Transformation Hands-on Workshop",
+  "title": "Monoliths to Microservices: Forsakringskassan",
   "description": "",
   "courses": [
     {
@@ -24,25 +24,7 @@
       "pathway_id": "redhat-middleware-workshops/scenarios",
       "course_id": "mono-to-micro-part-1",
       "id": "mono-to-micro-part-1",
-      "title": "Transforming an existing monolith (Part 1)"
-    },
-    {
-      "pathway_id": "redhat-middleware-workshops/scenarios",
-      "course_id": "mono-to-micro-part-2",
-      "id": "mono-to-micro-part-2",
-      "title": "Transforming an existing monolith (Part 2)"
-    },
-    {
-      "pathway_id": "redhat-middleware-workshops/scenarios",
-      "course_id": "reactive-microservices",
-      "id": "reactive-microservices",
-      "title": "Building Reactive Microservices"
-    },
-    {
-      "pathway_id": "redhat-middleware-workshops/scenarios",
-      "course_id": "resilient-apps",
-      "id": "resilient-apps",
-      "title": "Prevent and detect issues in a distributed system"
+      "title": "Transforming to Microservices using WildFly Swarm"
     }
   ]
 }
