@@ -10,6 +10,9 @@ oc get -n inventory dc/inventory >& /dev/null && oc scale --replicas=0 dc/invent
 oc get -n catalog dc/catalog >& /dev/null && oc scale --replicas=0 dc/catalog dc/catalog-database -n catalog ; \
 oc get -n cart dc/cart >& /dev/null && oc scale --replicas=0 dc/cart -n cart
 
+# workaround for https://github.com/istio/issues/issues/34
+setenforce 0
+
 # install istio
 curl -kL https://git.io/getLatestIstio | sed 's/curl/curl -k /g' | ISTIO_VERSION=${ISTIO_VERSION} sh -
 export PATH="$PATH:${ISTIO_HOME}/bin"
