@@ -94,7 +94,7 @@ Scroll down to the `ratings` service graph:
 This graph shows which other services are accessing the `ratings` service. You can see that
 `reviews:v2` and `reviews:v3` are calling the `ratings` service, and each call is resulting in
 `HTTP 200 (OK)`. Since the default routing is _round-robin_, that means each reviews service is
-calling the ratings service equally. And `ratings:v1` never calls it, as we expect.
+calling the ratings service equally. And `reviews:v1` never calls it, as we expect.
 
 For more on how to create, configure, and edit dashboards, please see the [Grafana documentation](http://docs.grafana.org/).
 
