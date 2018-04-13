@@ -1,4 +1,5 @@
 ![Red Hat Logo](assets/redhat.png)
+
 As modern application requirements become more complex, it’s apparent that one runtime, one
 framework, or one architectural style is no longer a feasible strategy. Organizations must figure out how
 to manage the complexity of distributed app development with diverse technologies, a lack of skilled
