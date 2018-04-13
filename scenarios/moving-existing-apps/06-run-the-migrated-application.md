@@ -26,7 +26,11 @@ At the `TODO: Add wildfly plugin here` we are going to add a the following confi
 &lt;/plugin&gt;
 </pre>
 
-Next we are going to add some configuration. First we need to point to our JBoss EAP installation using the `jboss-home` configuration. After that we will also have to tell JBoss EAP to use the profile configured for full Java EE, since it defaults to use the Java EE Web Profile. This is done by adding a `server-config` and set it to value `standalone-full.xml`
+Next we are going to add some configuration at the `TODO: Add configuration here` marker.
+First we need to point to our JBoss EAP installation using the `jboss-home` configuration.
+After that we will also have to tell JBoss EAP to use the profile configured for full Java
+EE, since it defaults to use the Java EE Web Profile. This is done by adding a `server-config`
+and set it to value `standalone-full.xml`
 
 <pre class="file" data-filename="pom.xml" data-target="insert" data-marker="<!-- TODO: Add configuration here -->">
 &lt;configuration&gt;

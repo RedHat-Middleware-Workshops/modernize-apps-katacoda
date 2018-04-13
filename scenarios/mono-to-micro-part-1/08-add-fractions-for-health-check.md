@@ -36,7 +36,7 @@ First, open the `pom.xml`{{open}} file.
 
 WildFly Swarm includes the `monitor` fraction which automatically adds health check infrastructure to your
 application when it is included as a fraction in the project. Click **Copy To Editor** to insert the new dependencies
-into the `pom.xml`{{open}} file:
+into the `pom.xml`{{open}} file at the `<!-- Add monitor fraction-->` marker:
 
 <pre class="file" data-filename="pom.xml" data-target="insert" data-marker="<!-- Add monitor fraction -->">
 &lt;dependency&gt;

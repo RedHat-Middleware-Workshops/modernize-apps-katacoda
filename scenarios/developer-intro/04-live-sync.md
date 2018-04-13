@@ -42,7 +42,7 @@ Next, let's make a change to the app that will be obvious in the UI.
 First, open `src/main/webapp/app/css/coolstore.css`{{open}}, which contains the CSS stylesheet for the
 CoolStore app.
 
-Add the following CSS to turn the header bar background to Red Hat red (click **Copy To Editor** to automatically add it):
+Add the following CSS to turn the header bar background to Red Hat red (click **Copy To Editor** to add it at the bottom):
 
 <pre class="file" data-filename="src/main/webapp/app/css/coolstore.css" data-target="append">
 
@@ -65,7 +65,7 @@ Re-visit the app by reloading the Coolstore webpage (or clicking again on the [C
 You should now see the red header:
 
 > **NOTE** If you don't see the red header, you may need to do a full reload of the webpage.
-On Windows/Linux press `CTRL`+`F5` or hold down `CTRL` and press the Reload button, or try
+On Windows/Linux press `CTRL`+`F5` or hold down `SHIFT` and press the Reload button, or try
 `CTRL`+`SHIFT`+`F5`. On Mac OS X, press `SHIFT`+`CMD`+`R`, or hold `SHIFT` while pressing the
 Reload button.
 
@@ -73,7 +73,7 @@ Reload button.
 
 **3. Rebuild again for BLUE background**
 
-Repeat the process, but replace the background color to be blue (click **Copy to Editor** to do this automatically):
+Repeat the process, but replace the background color to be blue (click **Copy to Editor** to replace `#CC0000` with `blue`):
 
 <pre class="file" data-filename="src/main/webapp/app/css/coolstore.css" data-target="insert" data-marker="background: #CC0000">
 background: blue

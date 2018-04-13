@@ -10,6 +10,8 @@ So our implementation of this service needs to retrieve a Product object from th
 
 **1. Add route**
 
+Make sure `src/main/java/com/redhat/coolstore/CartServiceVerticle.java`{{open}} is open.
+
 Let's start by adding a router, by adding the following where at the `//TODO: Create add router` marker in class `CartServiceVerticle` 
 
 <pre class="file" data-filename="./src/main/java/com/redhat/coolstore/CartServiceVerticle.java" data-target="insert" data-marker="//TODO: Create add router">
@@ -58,7 +60,7 @@ Normally in Java you would probably implement this method as `Product getProduct
 
 For making calls to external HTTP services Vert.x supplies a WebClient. The `WebClient` methods like `get()`, `post()` etc and is very easy to use. In our case we are going to use get and pass in port, hostname and uri. We are also going to set a timeout for the operation. So let's first add those to our configuration. 
 
-Copy this into the configuration file (or click the button):
+Copy this into the configuration file `src/main/resources/config-default.json`{{open}}:
 
 <pre class="file" data-filename="./src/main/resources/config-default.json" data-target="replace">
 {
@@ -185,7 +187,7 @@ This should print the follow:
 Since we are now so skilled in writing endpoints lets go ahead and also create the endpoint for removing a product. The only tricky part about removing is that the request might not remove all products in once. E.g. If we have 10 Red Hat Fedoras and the request just decreases 3 we should not remove the Shopping Cart item, but instead lower the quantity to 7. 
 
 
-Adding the following at the `//TODO: Add handler for removing an item from the cart`
+Again in the `src/main/java/com/redhat/coolstore/CartServiceVerticle.java`{{open}} file add the following at the `//TODO: Add handler for removing an item from the cart`
 
 <pre class="file" data-filename="./src/main/java/com/redhat/coolstore/CartServiceVerticle.java" data-target="insert" data-marker="//TODO: Add handler for removing an item from the cart">
 private void removeShoppingCartItem(RoutingContext rc) {
@@ -210,7 +212,8 @@ private void removeShoppingCartItem(RoutingContext rc) {
 
 Now let's go ahead and create the route.
 
-Add the following where at the `//TODO: Create remove router` marker in class `CartServiceVerticle.start` 
+Add the following at the `//TODO: Create remove router` marker in class `CartServiceVerticle.start`:
+
 <pre class="file" data-filename="./src/main/java/com/redhat/coolstore/CartServiceVerticle.java" data-target="insert" data-marker="//TODO: Create remove router">
 router.delete("/services/cart/:cartId/:itemId/:quantity").handler(this::removeShoppingCartItem);
 </pre>

@@ -79,9 +79,13 @@ migration paths include **IBM® WebSphere® Application Server** and **JBoss EAP
 
 **Wait for it to complete before continuing!**. You should see `Report created: /root/rhamt-reports/monolith/index.html`.
 
+[//]: # CDK > CDK Users will see a different location than `/root` and should browse there to see results.
+
 **3. View the results**
 
 Next, [click to view the report](https://[[HOST_SUBDOMAIN]]-9000-[[KATACODA_HOST]].environments.katacoda.com/monolith)
+
+[//]: # CDK > CDK USERS: If you running this outside the Katacoda environment, you must browse directly by opening `file:///${HOME}/rhamt-reports/monolith` in your browser
 
 You should see the landing page for the report:
 

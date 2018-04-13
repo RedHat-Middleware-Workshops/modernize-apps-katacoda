@@ -5,9 +5,9 @@ boilerplate code for doing a REST call. However Feign also have another good pro
 fallback logic. In this case we will use static inner class since we want the logic for the fallback to be part of the
 Client and not in a separate class.
 
-Open: ``src/main/java/com/redhat/coolstore/client/InventoryClient.java``{{open}}
+Open: `src/main/java/com/redhat/coolstore/client/InventoryClient.java`{{open}}
 
-And paste:
+And paste this into it at the `//TODO: Add Fallback factory here` marker:
 
 <pre class="file" data-filename="src/main/java/com/redhat/coolstore/client/InventoryClient.java"
 data-target="insert" data-marker="//TODO: Add Fallback factory here">
@@ -27,7 +27,7 @@ static class InventoryClientFallbackFactory implements FallbackFactory&lt;Invent
 </pre>
 
 After creating the fallback factory all we have todo is to tell Feign to use that fallback in case of an issue, by adding the fallbackFactory property to the `@FeignClient` annotation. Click **Copy To Editor** to replace
-it for you:
+it for you at the `@FeignClient(name="inventory")` line:
 
 <pre class="file" data-filename="src/main/java/com/redhat/coolstore/client/InventoryClient.java"
 data-target="insert" data-marker="@FeignClient(name=&quot;inventory&quot;)">
@@ -73,7 +73,7 @@ Now if you run ``mvn verify -Dtest=CatalogEndpointTest``{{execute}} the test wil
 
 So since even if our inventory service fails we are still returning inventory quantity -1. The test fails because we are expecting the quantity to be 9999.
 
-Change back the class rule so that we don't fail the tests like this:
+Change back the class rule by re-commenting out the `.willReturn(serverError())` line so that we don't fail the tests like this:
 ```
 @ClassRule
 public static HoverflyRule hoverflyRule = HoverflyRule.inSimulationMode(dsl(
@@ -92,6 +92,8 @@ Make sure the test works again by running ``mvn verify -Dtest=CatalogEndpointTes
 Having fallbacks is good but that also requires that we can correctly detect when a dependent services isn't responding correctly. Besides from not responding a service can also respond slowly causing our services to also respond slow. This can lead to cascading issues that is hard to debug and pinpoint issues with. We should therefore also have sane defaults for our services. You can add defaults by adding it to the configuration.
 
 Open ``src/main/resources/application-default.properties``{{open}}
+
+And add this line to it at the `#TODO: Set timeout to for inventory to 500ms` marker:
 
 <pre class="file" data-filename="src/main/resources/application-default.properties" data-target="insert" data-marker="#TODO: Set timeout to for inventory to 500ms">
 hystrix.command.inventory.execution.isolation.thread.timeoutInMilliseconds=500

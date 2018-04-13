@@ -12,7 +12,8 @@ The `Router` in Vert.x is very flexible and makes it easy to deal with complex H
 In our example we will only use basic GET, POST and DELETE routing. Let's get started with the GET operations.
 
 **1. Creating a GET /services/cart endpoint**
-First we are going to create a very simple endpoint that returns a `ShopppingCart` object as a JSON String using the ```src/main/java/com/redhat/coolstore/utils/Transformers.java```{open} to get a `JsonObject` that we can then return as String
+First we are going to create a very simple endpoint that returns a `ShopppingCart` object as a JSON String using the `src/main/java/com/redhat/coolstore/utils/Transformers.java`{{open}} to get a `JsonObject` that we can then return as String.
+Add this code at the `//TODO: Add handler for getting a shoppingCart by id` marker:
 
 <pre class="file" data-filename="./src/main/java/com/redhat/coolstore/CartServiceVerticle.java" data-target="insert" data-marker="//TODO: Add handler for getting a shoppingCart by id">
 private void getCart(RoutingContext rc) {
@@ -27,6 +28,9 @@ private void getCart(RoutingContext rc) {
 **2. Creating a GET /services/carts endpoint that returns all carts**
 
 Now let's create a bit more complex implementation that returns many `ShoppingCarts` as a JSON array.
+
+Open the file `src/main/java/com/redhat/coolstore/utils/Transformers.java`{{open}} and
+add this code at the `//TODO: Add handler for getting a list of shoppingCarts` marker:
 
 <pre class="file" data-filename="./src/main/java/com/redhat/coolstore/CartServiceVerticle.java" data-target="insert" data-marker="//TODO: Add handler for getting a list of shoppingCarts">
 private void getCarts(RoutingContext rc) {
@@ -49,12 +53,14 @@ In this lambda expression we are iterating through the list of shopping carts an
 
 **3. Add a routes**
 
-Add the first route by adding the following at `//TODO: Create cart router` marker (or click the button)
+Open the `src/main/java/com/redhat/coolstore/CartServiceVerticle.java`{{open}}.
+
+Add the first route by adding the following at `//TODO: Create cart router` marker
 <pre class="file" data-filename="./src/main/java/com/redhat/coolstore/CartServiceVerticle.java" data-target="insert" data-marker="//TODO: Create cart router">
 router.get("/services/cart/:cartId").handler(this::getCart);
 </pre>
 
-Add the second route by adding the following at //TODO: Create carts router marker (or click the button)
+Add the second route by adding the following at `//TODO: Create carts router` marker
 <pre class="file" data-filename="./src/main/java/com/redhat/coolstore/CartServiceVerticle.java" data-target="insert" data-marker="//TODO: Create carts router">
 router.get("/services/carts").handler(this::getCarts);
 </pre>
@@ -75,7 +81,7 @@ Restart the application by running the following in the terminal or in clicking 
 
 Now test the route with a curl command in the terminal like this:
 
-```curl -X GET http://localhost:8082/services/carts; echo```{{execute T2}}
+`curl -X GET http://localhost:8082/services/carts; echo`{{execute T2}}
 
 This should print the body of the response  that looks somewhat like this. Note that the the content from this is generate from the ```src/main/java/com/redhat/coolstore/utils/Transformers.java```{{open}} and will return a random number of products, so you actual content may vary.
 

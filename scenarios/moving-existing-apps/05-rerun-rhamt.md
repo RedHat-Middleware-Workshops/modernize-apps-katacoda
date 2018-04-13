@@ -22,6 +22,8 @@ mvn clean && \
 
 [Reload the report web page](https://[[HOST_SUBDOMAIN]]-9000-[[KATACODA_HOST]].environments.katacoda.com/monolith)
 
+[//]: # CDK > CDK USERS: If you running this outside the Katacoda environment, you can browse directly by opening `file:///${HOME}/rhamt-reports/monolith` in your browser
+
 And verify that it now reports 0 Story Points:
 
 You have successfully migrated

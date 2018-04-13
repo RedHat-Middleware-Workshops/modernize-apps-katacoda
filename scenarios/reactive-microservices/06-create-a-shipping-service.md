@@ -99,6 +99,8 @@ The headers of the message are available with headers.
 **1. Add a Shipping Verticle**
 Since RHOAR currently do not support using distributed event bus we will create the Verticle locally. For now our shipping service will only return a fixed ShippingFee of 37.0. RHOAR is planned to support distributes event bus early 2018. Since the Event Bus API is the same very little code changes (if any) will be required to move this to a separate service in OpenShift in the future.
 
+Add this code to the `src/main/java/com/redhat/coolstore/ShippingServiceVerticle.java`{{open}} file:
+
 <pre class="file" data-filename="./src/main/java/com/redhat/coolstore/ShippingServiceVerticle.java" data-target="replace">
 package com.redhat.coolstore;
 
@@ -125,7 +127,8 @@ public class ShippingServiceVerticle extends AbstractVerticle {
 }
 </pre>
 
-We also need to start the Verticle by deploying it form the MainVerticle
+We also need to start the Verticle by deploying it form the MainVerticle. So add this code
+to the `src/main/java/com/redhat/coolstore/MainVerticle.java` file at the `// TODO: Deploy PromoServiceVerticle` marker:
 
 <pre class="file" data-filename="./src/main/java/com/redhat/coolstore/MainVerticle.java" data-target="insert" data-marker="// TODO: Deploy PromoServiceVerticle">
 vertx.deployVerticle(
@@ -141,7 +144,7 @@ In the future we might want to base the shipping service on the actual content o
 
 We will implement the shipping fee similary to how we implemented the `getProduct` that called out to the Catalog service. 
 
-In the ``src/main/java/com/redhat/coolstore/CartServiceVerticle.java``{{open}} we will add the following method at the marker: `//TODO: Add method for getting the shipping fee`. Copy the content below or click on the CopyToEditor button.
+In `src/main/java/com/redhat/coolstore/CartServiceVerticle.java`{{open}} we will add the following method at the marker: `//TODO: Add method for getting the shipping fee`. Copy the content below:
 
 <pre class="file" data-filename="./src/main/java/com/redhat/coolstore/CartServiceVerticle.java" data-target="insert" data-marker="//TODO: Add method for getting the shipping fee">
 private void getShippingFee(ShoppingCart cart, Handler&lt;AsyncResult&lt;Double&gt;&gt; resultHandler) {
@@ -161,7 +164,8 @@ private void getShippingFee(ShoppingCart cart, Handler&lt;AsyncResult&lt;Double&
 }
 </pre>
 
-Now, lets update the `addProduct` request handler method. Click to add:
+Now, lets update the `addProduct` request handler method. Click to add it at the `sendCart(cart,rc); //TODO: update the shipping fee` marker replacing
+the existing `sendCart(cart, rc);` with an updated code block:
 
 <pre class="file" data-filename="./src/main/java/com/redhat/coolstore/CartServiceVerticle.java" data-target="insert" data-marker="sendCart(cart,rc); //TODO: update the shipping fee">
 this.getShippingFee(cart, message -&gt; {
@@ -175,7 +179,8 @@ this.getShippingFee(cart, message -&gt; {
 });
 </pre>
 
-Since we have the special case of product already exists we need to update it twice.  Click to add:
+Since we have the special case of product already exists we need to update it twice.  Replace the line with
+`sendCart(cart, rc)` that you just added with another duplicate block:
 
 <pre class="file" data-filename="./src/main/java/com/redhat/coolstore/CartServiceVerticle.java" data-target="insert" data-marker="sendCart(cart,rc); //TODO: update the shipping fee, here as well">
 this.getShippingFee(cart, message -&gt; {

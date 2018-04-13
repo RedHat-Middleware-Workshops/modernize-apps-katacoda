@@ -80,7 +80,7 @@ Undertow. Since Red Hat offers support for Apache Tomcat (e.g., security patches
 add support for Undertow shortly.
 
 To add Apache Tomcat to our project all we have to do is to add the following lines in ``pom.xml``{{open}}. Click **Copy to Editor**
-to automatically add these lines:
+to automatically add these lines at the `<!-- TODO: Add web (tomcat) dependency here -->` marker:
 
 <pre class="file" data-filename="pom.xml" data-target="insert" data-marker="<!-- TODO: Add web (tomcat) dependency here -->">
     &lt;dependency&gt;
@@ -89,7 +89,7 @@ to automatically add these lines:
     &lt;/dependency&gt;
 </pre>
 
-We will also make use of Java Persistance API (JPA) so we need to add the following to `pom.xml`
+We will also make use of Java Persistance API (JPA) so we need to add the following to `pom.xml` at the `<!-- TODO: Add data jpa dependency here -->` marker:
 
 <pre class="file" data-filename="pom.xml" data-target="insert" data-marker="<!-- TODO: Add data jpa dependency here -->">
     &lt;dependency&gt;
@@ -98,7 +98,8 @@ We will also make use of Java Persistance API (JPA) so we need to add the follow
     &lt;/dependency&gt;
 </pre>
 
-We will go ahead and add a bunch of other dependencies while we have the pom.xml open. These will be explained later.
+We will go ahead and add a bunch of other dependencies while we have the pom.xml open. These will be explained later. Add these at the
+`<!-- TODO: Add actuator, feign and hystrix dependency here -->` marker:
 
 <pre class="file" data-filename="pom.xml" data-target="insert" data-marker="<!-- TODO: Add actuator, feign and hystrix dependency here -->">
     &lt;dependency&gt;

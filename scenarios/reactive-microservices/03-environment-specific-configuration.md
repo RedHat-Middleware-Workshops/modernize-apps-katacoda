@@ -63,7 +63,8 @@ The reason that it doesn't work is that when we calling `setupConfiguration()` t
 
 One solution to this problem is to load our Verticle from another verticle and pass the configuration as a deployment option.
 
-Let's add a `MainVerticle` that will load the `CartServiceVerticle` like this:
+Let's add a `MainVerticle` that will load the `CartServiceVerticle`. Add a `src/main/java/com/redhat/coolstore/MainVerticle.java` file
+and add the following content:
 
 <pre class="file" data-filename="./src/main/java/com/redhat/coolstore/MainVerticle.java" data-target="replace">
 package com.redhat.coolstore;
@@ -115,7 +116,7 @@ public class MainVerticle extends AbstractVerticle {
 **2. Create the configuration file**
 At the moment we only need one value in the configuration file, but we will add more later.
 
-Copy this into the configuration file (or click the button):
+Copy this into the configuration file `src/main/resources/config-default.json`{{open}}:
 
 <pre class="file" data-filename="./src/main/resources/config-default.json" data-target="replace">
 {
@@ -123,9 +124,9 @@ Copy this into the configuration file (or click the button):
 }
 </pre>
 
-Finally we need to tell the `vertx-maven-plugin` to use the MainVerticle instead of the CartServiceVerticle. In the ```pom.xml```{{open}} under `project->properties` there is a tag called `<vertx.verticle>` that currently specifies the full path to the `CartServiceVerticle`.
+Finally we need to tell the `vertx-maven-plugin` to use the MainVerticle instead of the CartServiceVerticle. In the `pom.xml`{{open}} under `project->properties` there is a tag called `<vertx.verticle>` that currently specifies the full path to the `CartServiceVerticle`.
 
-First open the ```pom.xml```{{open}}
+First open the `pom.xml`{{open}}
 
 Then Change the `<vertx.verticle>com.redhat.coolstore.CartServiceVerticle</vertx.verticle>` to `<vertx.verticle>com.redhat.coolstore.MainVerticle</vertx.verticle>`
 
@@ -143,6 +144,8 @@ Restart the application by running the following in the terminal or in clicking 
 In the output you should now see that the server is starting on port 8082 and not 10080 like before.
 
 Click on the **Local Web Browser** tab in the console frame of this browser window, which will open another tab or window of your browser pointing to port 8082 on your client. 
+
+[//]: # CDK > CDK Users will not have a **Local Web Browser** tab. Just open the link below:
 
 ![Local Web Browser Tab](/redhat-middleware-workshops/assets/reactive-microservices/web-browser-tab.png)
 

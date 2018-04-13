@@ -24,7 +24,8 @@ public class MyVerticle extends AbstractVerticle {
 
 **1. Creating your first Verticle**
 
-We will start by creating the `CartServiceVerticle` like this.
+We will start by creating the `CartServiceVerticle` like this. Create this file and add this code to the
+`src/main/java/com/redhat/coolstore/CartServiceVerticle.java` file:
 
 <pre class="file" data-filename="./src/main/java/com/redhat/coolstore/CartServiceVerticle.java" data-target="replace">
 package com.redhat.coolstore;
@@ -156,20 +157,23 @@ You should see output that looks like this:
 ```
 
 **3. Add a router that can serve static content**
-Now let's add a Web server that can server static content, which only requires three lines of code
+Now let's add a Web server that can server static content, which only requires three lines of code at the `//TODO: Create Router` marker:
 
 Create the router object:
 <pre class="file" data-filename="./src/main/java/com/redhat/coolstore/CartServiceVerticle.java" data-target="insert" data-marker="//TODO: Create Router">
 Router router = Router.router(vertx);
 </pre>
 
-Add the route for static content:
+Add the route for static content at the `//TODO: Create static router` marker:
+
 <pre class="file" data-filename="./src/main/java/com/redhat/coolstore/CartServiceVerticle.java" data-target="insert" data-marker="//TODO: Create static router">
 router.get("/*").handler(StaticHandler.create());
 </pre>
+
 This configure the router to use the `StaticHandler` (provided by Vert.x) for all GET request.
 
-Create and start the web server listing to the port retrieved from the configuration
+Create and start the web server listing to the port retrieved from the configuration by adding this to the `//TODO: Create HTTP Server` marker:
+
 <pre class="file" data-filename="./src/main/java/com/redhat/coolstore/CartServiceVerticle.java" data-target="insert" data-marker="//TODO: Create HTTP Server">
 vertx.createHttpServer().requestHandler(router::accept).listen(serverPort);
 </pre>
@@ -190,9 +194,9 @@ You should now see an HTML page that looks like this:
 
 **3. Add a simple REST Handler**
 
-Now let's add a simple rest service. 
+Now let's add a simple rest service. Replace the `//TODO: Create hello router` marker with this code to
+create and start the web server listing to the port retrieved from the configuration:
 
-Create and start the web server listing to the port retrieved from the configuration
 <pre class="file" data-filename="./src/main/java/com/redhat/coolstore/CartServiceVerticle.java" data-target="insert" data-marker="//TODO: Create hello router">
 router.get("/hello").handler(rc-&gt; rc.response()
             .setStatusCode(200)

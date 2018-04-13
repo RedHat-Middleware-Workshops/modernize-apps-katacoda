@@ -2,7 +2,7 @@ Now that you've logged into OpenShift, let's deploy our new cart microservice:
 
 **Update configuration**
 
-Create the file by clicking on open ``src/main/resources/config-openshift.json``{{open}}
+Create the file: ``src/main/resources/config-openshift.json``{{open}}
 
 Copy the following content to the file:
 
@@ -30,7 +30,7 @@ Let's add a deployment.yml that will set the system property to use our `config-
 
 Create the file by clicking on open ``src/main/fabric8/deployment.yml``{{open}}
 
-Add the following content by clicking on *Copy to Editor*:
+Add the following content the the file (by clicking on *Copy to Editor* or copying it in directly):
 
 <pre class="file" data-filename="./src/main/fabric8/deployment.yml" data-target="replace">
 apiVersion: v1
@@ -51,7 +51,7 @@ We also need to add a route.yml like this:
 
 Create the file by clicking on open ``src/main/fabric8/route.yml``{{open}}
 
-Add the following content by clicking on *Copy to Editor*:
+Add the following content by clicking on *Copy to Editor* or copying it in directly:
 
 <pre class="file" data-filename="./src/main/fabric8/route.yml" data-target="replace">
 apiVersion: v1

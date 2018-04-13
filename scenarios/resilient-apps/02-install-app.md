@@ -30,6 +30,8 @@ Run the following command:
 
 `~/install-sample-app.sh`{{execute}}
 
+[//]: # CDK > CDK USERS: If you running this outside the Katacoda environment, refer to the **Appendix** at the end of this document and run the above command using the commands in the Appendix.
+
 The application consists of the usual objects like Deployments, Services, and Routes.
 
 As part of the installation, we use Istio to "decorate" the application with additional

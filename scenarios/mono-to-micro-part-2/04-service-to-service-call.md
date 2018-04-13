@@ -29,7 +29,7 @@ Now at the markers `//TODO: Add check for Quantity` add the following line:
 .returns(9999,Product::getQuantity)
 </pre>
 
-And add it to the second test as well:
+And add it to the second test as well at the remaining `//TODO: Add check for Quantity` marker:
 
 <pre class="file" data-filename="src/test/java/com/redhat/coolstore/service/CatalogEndpointTest.java" data-target="insert" data-marker="//TODO: Add check for Quantity">
 .returns(9999,Product::getQuantity)
@@ -52,7 +52,8 @@ Tests run: 4, Failures: 2, Errors: 0, Skipped: 0
 Again the test fails because we are trying to call the Inventory service which is not running. We will soon implement the code to call the inventory service, but first
 we need a away to test this service without having to really on the inventory services to be up an running. For that we are going to use an API Simulator
 called [HoverFly](http://hoverfly.io) and particular it's capability to simulate remote APIs. HoverFly is very convenient to use with Unit test and all we have to do is
-to add a `ClassRule` that will simulate all calls to inventory like this (click to add):
+to add a `ClassRule` that will simulate all calls to inventory. Click **Copy To Editor** to insert the
+code at the `//TODO: Add ClassRule for HoverFly Inventory simulation` marker:
 
 <pre class="file" data-filename="src/test/java/com/redhat/coolstore/service/CatalogEndpointTest.java"
 data-target="insert" data-marker="//TODO: Add ClassRule for HoverFly Inventory simulation">
@@ -73,11 +74,11 @@ This `ClassRule` means that if our tests are trying to call our inventory url Ho
 
 Since we now have a nice way to test our service-to-service interaction we can now create the client that calls the Inventory. Netflix has provided some nice extensions to the Spring Framework that are mostly captured in the Spring Cloud project, however Spring Cloud is mainly focused on Pivotal Cloud Foundry and because of that Red Hat and others have contributed Spring Cloud Kubernetes to the Spring Cloud project, which enables the same functionallity for Kubernetes based platforms like OpenShift. 
 
-The inventory client will use a Netflix project called Feign, which provides a nice way to avoid having to write boiler plate code. Feign also integrate with Hystrix which gives us capability to Circute Break calls that doesn't work. We will discuss this more later, but let's start with the implementation of the Inventry Client. Using Feign all we have todo is to create a interface that details which parameters and return type we expect, annotate it with @RequestMapping and provide some details and then annotate the interface with @Feign and provide it with a name.
+The inventory client will use a Netflix project called _Feign_, which provides a nice way to avoid having to write boilerplate code. Feign also integrate with Hystrix which gives us capability to Circute Break calls that doesn't work. We will discuss this more later, but let's start with the implementation of the Inventory Client. Using Feign all we have todo is to create a interface that details which parameters and return type we expect, annotate it with `@RequestMapping` and provide some details and then annotate the interface with `@Feign` and provide it with a name.
 
 Create the Inventory client by clicking ``src/main/java/com/redhat/coolstore/client/InventoryClient.java``{{open}}
 
-Add the followng small code snippet to it (click to add):
+Add the followng small code to the file:
 
 <pre class="file" data-filename="src/main/java/com/redhat/coolstore/client/InventoryClient.java" data-target="replace">
 package com.redhat.coolstore.client;
@@ -105,21 +106,21 @@ There is one more thing that we need to do which is to tell Feign where the inve
 
 Open ``src/main/resources/application-default.properties``{{open}}
 
-And add these properties by clicking **Copy to Editor**:
+And add these properties by clicking **Copy to Editor** and adding to the `#TODO: Configure netflix libraries` marker:
 
 <pre class="file" data-filename="src/main/resources/application-default.properties" data-target="insert" data-marker="#TODO: Configure netflix libraries">
 inventory.ribbon.listOfServers=inventory:8080
 feign.hystrix.enabled=true
 </pre>
  
-By setting inventory.ribbon.listOfServers we are hard coding the actual URL of the service to `inventory:8080`. If we had multiple servers we could also add those using a comma. However using Kubernetes there is no need to have multiple endpoints listed here since Kubernetes has a concept of _Services_ that will internally route between multiple instances of the same service. Later on we will update this value to reflect our URL when deploying to OpenShift.
+By setting `inventory.ribbon.listOfServers` we are hard coding the actual URL of the service to `inventory:8080`. If we had multiple servers we could also add those using a comma. However using Kubernetes there is no need to have multiple endpoints listed here since Kubernetes has a concept of _Services_ that will internally route between multiple instances of the same service. Later on we will update this value to reflect our URL when deploying to OpenShift.
 
 
 Now that we have a client we can make use of it in our `CatalogService`
 
 Open ``src/main/java/com/redhat/coolstore/service/CatalogService.java``{{open}}
 
-And autowire (e.g. inject) the client into it. 
+And autowire (e.g. inject) the client into it by inserting this at the `//TODO: Autowire Inventory Client` marker:
 
 <pre class="file" data-filename="src/main/java/com/redhat/coolstore/service/CatalogService.java" data-target="insert" data-marker="//TODO: Autowire Inventory Client">
 @Autowired
@@ -132,7 +133,7 @@ Next, update the `read(String id)` method at the comment `//TODO: Update the qua
 product.setQuantity(inventoryClient.getInventoryStatus(product.getItemId()).getQuantity());
 </pre>
 
-Also, don't forget to add the import statement for the new class:
+Also, don't forget to add the import statement by un-commenting the import statement `//import com.redhat.coolstore.client.InventoryClient` near the top
 
 <pre class="file" data-filename="src/main/java/com/redhat/coolstore/service/CatalogService.java" data-target="insert" data-marker="//import com.redhat.coolstore.client.InventoryClient;">
 import com.redhat.coolstore.client.InventoryClient;
