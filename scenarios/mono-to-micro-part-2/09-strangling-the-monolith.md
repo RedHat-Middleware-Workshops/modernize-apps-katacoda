@@ -37,7 +37,7 @@ My hostname is `www-coolstore-dev.apps.127.0.0.1.nip.io` but **yours will be dif
 
 ![Greeting](/redhat-middleware-workshops/assets/mono-to-micro-part-2/route-vals.png)
 
-Leave other values set to their defaults, and click **Save**
+Leave other values set to their defaults, and click **Create**
 
 **4. Test the route**
 
