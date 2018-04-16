@@ -145,7 +145,7 @@ In the output you should now see that the server is starting on port 8082 and no
 
 Click on the **Local Web Browser** tab in the console frame of this browser window, which will open another tab or window of your browser pointing to port 8082 on your client. 
 
-[//]: # CDK > CDK Users will not have a **Local Web Browser** tab. Just open the link below:
+[//]: # (CDK > CDK Users will not have a **Local Web Browser** tab. Just open the link below:)
 
 ![Local Web Browser Tab](/redhat-middleware-workshops/assets/reactive-microservices/web-browser-tab.png)
 

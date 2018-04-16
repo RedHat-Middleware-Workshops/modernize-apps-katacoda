@@ -4,7 +4,7 @@ In this step we will migrate some Weblogic-specific code in the app to use stand
 
 [Open the Issues report](https://[[HOST_SUBDOMAIN]]-9000-[[KATACODA_HOST]].environments.katacoda.com/monolith/reports/migration_issues.html):
 
-[//]: # CDK > CDK USERS: If you running this outside the Katacoda environment, you must browse directly by opening `file:///${HOME}/rhamt-reports/monolith/reports/migration_issues.html` in your browser
+[//]: # (CDK > CDK USERS: If you running this outside the Katacoda environment, you must browse directly by opening `file:///${HOME}/rhamt-reports/monolith/reports/migration_issues.html` in your browser)
 
 ![Issues](/redhat-middleware-workshops/assets/moving-existing-apps/project-issues.png)
 
@@ -32,7 +32,7 @@ _Weblogic LifecycleListener_ in this file.
 
 Click **Copy To Editor** to make these changes in the file.
 
-[//]: # CDK > CDK USERS: If you running this outside the Katacoda environment you won't have a **Copy to Editor** button. Instead you must make these code changes yourself, manually.
+[//]: # (CDK > CDK USERS: If you running this outside the Katacoda environment you won't have a **Copy to Editor** button. Instead you must make these code changes yourself, manually.)
 
 <pre class="file" data-filename="./src/main/java/com/redhat/coolstore/utils/StartupListener.java" data-target="replace">
 package com.redhat.coolstore.utils;

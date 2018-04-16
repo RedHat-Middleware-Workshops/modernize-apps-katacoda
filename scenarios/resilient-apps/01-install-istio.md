@@ -7,7 +7,7 @@ Run the following to login as admin:
 
 `oc login [[HOST_SUBDOMAIN]]-8443-[[KATACODA_HOST]].environments.katacoda.com -u admin -p admin --insecure-skip-tls-verify=true`{{execute}}
 
-[//]: # CDK > CDK users can simply use `oc login -u admin -p admin`
+[//]: # (CDK > CDK users can simply use `oc login -u admin -p admin`)
 
 **If you are unable to login as admin or get any failures, ask an instructor for help.**
 
@@ -15,7 +15,7 @@ Next, run the following command:
 
 `~/install-istio.sh`{{execute}}
 
-[//]: # CDK > CDK USERS: If you running this outside the Katacoda environment, refer to the **Appendix** at the end of this document and run the above command using the commands in the Appendix.
+[//]: # (CDK > CDK USERS: If you running this outside the Katacoda environment, refer to the **Appendix** at the end of this document and run the above command using the commands in the Appendix.)
 
 This command:
 

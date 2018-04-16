@@ -20,7 +20,7 @@ testing.
 
 To test the running application, click on the **Local Web Browser** tab in the console frame of this browser window. This will open another tab or window of your browser pointing to port 8081 on your client.
 
-[//]: # CDK Users do not have a **Local Web Browser** link. Use the link below.
+[//]: # (CDK Users do not have a **Local Web Browser** link. Use the link below.)
 
 ![Local Web Browser Tab](/redhat-middleware-workshops/assets/mono-to-micro-part-2/web-browser-tab.png)
 
