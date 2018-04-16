@@ -35,6 +35,7 @@ the instructions for installing it and be sure you have access to the `oc` comma
 
 > NOTE: After installing CDK, you must run additional setup outlined in the **Additional CDK Setup** section.
 
+* [JBoss EAP 7.1.0 GA](https://developers.redhat.com/download-manager/file/jboss-eap-7.1.0.zip) - save the `.zip` file to your ${HOME} directory (it will be used in the first scenario)
 * [OpenJDK 1.8 or later](http://openjdk.java.net/install/) with its `bin` directory on your `$PATH`
     * Run `java -version` and it should be `1.8.x` or later
 * [Maven 3.3.9](http://maven.apache.org/download.cgi) or later
@@ -86,7 +87,7 @@ oc login -u system:admin # login as cluster admin
 # Add admin privileges for admin and developer
 oc adm policy add-role-to-user system:image-puller system:anonymous
 oc adm policy add-cluster-role-to-user cluster-admin admin
-oadm policy add-cluster-role-to-user sudoer developer
+oc adm policy add-cluster-role-to-user sudoer developer
 
 # Import jenkins images and re-tag for 3.7
 oc import-image jenkins:v3.7 --from='registry.access.redhat.com/openshift3/jenkins-2-rhel7:v3.7' --confirm -n openshift
@@ -94,7 +95,7 @@ oc export template jenkins-persistent -n openshift -o json | sed 's/jenkins:late
 oc export template jenkins-ephemeral -n openshift -o json | sed 's/jenkins:latest/jenkins:v3.7/g' | oc replace -f - -n openshift
 
 # import Monolith templates and JBoss Imagestreams
-oc create -n openshift -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/jboss-image-streams.json
+oc create -n openshift -f https://raw.githubusercontent.com/openshift/openshift-ansible/release-3.9/roles/openshift_examples/files/examples/v3.9/xpaas-streams/jboss-image-streams.json
 oc create -n openshift -f https://raw.githubusercontent.com/RedHat-Middleware-Workshops/modernize-apps-labs/master/monolith/src/main/openshift/template-binary.json
 oc create -n openshift -f https://raw.githubusercontent.com/RedHat-Middleware-Workshops/modernize-apps-labs/master/monolith/src/main/openshift/template-prod.json
 
