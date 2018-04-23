@@ -18,7 +18,9 @@
 
  These documents contains a complete set of instructions for running the workshop, split into different _scenarios_. You can use these documents as a companion as you progress through the scenarios, but keep in mind that some of the links in this document may not work as they will be specific to your online environment. You will be expected to substitute your own values for the following URLs:
 
- * **$OPENSHIFT_MASTER** - When you see this variable, replace it with the value of your own OpenShift master url, such as `https://master.openshift.com:8443` (be sure to include the port!).
+ * **$OPENSHIFT_MASTER** - When you see this variable, replace it with the value of your own OpenShift master hostname/port, such as `https://master.openshift.com:8443` (be sure to include the port!).
+
+ * **$ROUTE_SUFFIX** - When you see this variable, replace it with the value of your own OpenShift default routing suffix. For example, if you see `http://coolstore-dev.$ROUTE_SUFFIX` then you would replace this with `http://coolstore-dev.apps.mycompany.com` assuming your OpenShift cluster uses a default routing suffix of `apps.mycompany.com`.
 
 # Intro
 
@@ -55,8 +57,9 @@ the instructions for installing it and be sure you have access to the `oc` comma
 (e.g. `oc login -u developer -p developer`). You can also use other versions of OpenShift version
 3.7 or later, including [OpenShift Origin](https://www.openshift.org/).
 
-> NOTE: After installing CDK, you must run additional setup outlined in the **Additional CDK Setup** section.
+> NOTE: When using your own OpenShift cluster, you must run additional setup outlined in the **Additional OpenShift Configuration** section.
 
+* [JBoss EAP 7.1.0 GA](https://developers.redhat.com/download-manager/file/jboss-eap-7.1.0.zip) - save the `.zip` file to your ${HOME} directory (it will be used in the first scenario)
 * [OpenJDK 1.8 or later](http://openjdk.java.net/install/) with its `bin` directory on your `$PATH`
     * Run `java -version` and it should be `1.8.x` or later
 * [Maven 3.3.9](http://maven.apache.org/download.cgi) or later
@@ -65,7 +68,7 @@ the instructions for installing it and be sure you have access to the `oc` comma
     * Run `git --version` and it should be `2.7.2` or later
 * Various common Linux developer utilities (`unzip`, `curl`, `tree`, etc)
 * A text editor or IDE for editing code
-* [Red Hat Application Migration Toolkit 4.x](https://developers.redhat.com/products/rhamt/download/). Download
+* [Red Hat Application Migration Toolkit 4.0.0.Beta4](https://developers.redhat.com/products/rhamt/download/). Download
 and unzip into the `${HOME}/rhamt-cli-4.0.0.Beta4` directory (you can install it elsewhere, but you'll need
 to specify the path when running the tool during the first lab).
 * A copy of the source code for exercises at `${HOME}/projects` (see below)
@@ -95,12 +98,12 @@ In various places throughout the exercises, commands are run using paths that
 refer to `/root` and `~` and `$HOME` - this directory is the user's home directory and will be different,
 depending on your OS and referred to as `%USER_HOME%` on Windows. You'll need to take care to replace the paths
 appropriately if you've installed the tools and source code in somewhere other than `${HOME}` and
-be sure to replace `$HOME` or `~` with `%USER_HOME%` as needed on Windows.
+be sure to replace `/root`/, `$HOME` or `~` with `%USER_HOME%` as needed on Windows.
 
-## Additional CDK Setup
+## Additional OpenShift Configuration
 
 This lab makes use of OpenShift features and Linux container images available on the Red Hat Container
-Catalog and Docker Hub. To install and configure CDK to use them, run the following command:
+Catalog and Docker Hub. To install and configure OpenShift to use them, run the following commands:
 
 ```bash
 oc login -u system:admin # login as cluster admin
@@ -108,7 +111,7 @@ oc login -u system:admin # login as cluster admin
 # Add admin privileges for admin and developer
 oc adm policy add-role-to-user system:image-puller system:anonymous
 oc adm policy add-cluster-role-to-user cluster-admin admin
-oadm policy add-cluster-role-to-user sudoer developer
+oc adm policy add-cluster-role-to-user sudoer developer
 
 # Import jenkins images and re-tag for 3.7
 oc import-image jenkins:v3.7 --from='registry.access.redhat.com/openshift3/jenkins-2-rhel7:v3.7' --confirm -n openshift
@@ -116,7 +119,7 @@ oc export template jenkins-persistent -n openshift -o json | sed 's/jenkins:late
 oc export template jenkins-ephemeral -n openshift -o json | sed 's/jenkins:latest/jenkins:v3.7/g' | oc replace -f - -n openshift
 
 # import Monolith templates and JBoss Imagestreams
-oc create -n openshift -f https://raw.githubusercontent.com/jboss-openshift/application-templates/master/jboss-image-streams.json
+oc create -n openshift -f https://raw.githubusercontent.com/openshift/openshift-ansible/release-3.9/roles/openshift_examples/files/examples/v3.9/xpaas-streams/jboss-image-streams.json
 oc create -n openshift -f https://raw.githubusercontent.com/RedHat-Middleware-Workshops/modernize-apps-labs/master/monolith/src/main/openshift/template-binary.json
 oc create -n openshift -f https://raw.githubusercontent.com/RedHat-Middleware-Workshops/modernize-apps-labs/master/monolith/src/main/openshift/template-prod.json
 

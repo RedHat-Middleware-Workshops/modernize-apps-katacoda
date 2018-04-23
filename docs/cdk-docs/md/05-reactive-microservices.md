@@ -1250,7 +1250,7 @@ This sample project includes a simple UI that allows you to access the Inventory
 UI that you previously accessed outside of OpenShift which shows the CoolStore inventory. Click on the
 route URL at 
 
-`http://cart-cart.$OPENSHIFT_MASTER`
+`http://cart-cart.$ROUTE_SUFFIX`
 to access the sample UI.
 
 > You can also access the application through the link on the OpenShift Web Console Overview page.

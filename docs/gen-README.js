@@ -49,8 +49,11 @@ can use these documents as a companion as you progress through the scenarios, bu
 in this document may not work as they will be specific to your online environment. You will be expected to substitute your \
 own values for the following URLs:\n\n \
 \
-* **$OPENSHIFT_MASTER** - When you see this variable, replace it with the value of your own OpenShift master url, such \
-as `https://master.openshift.com:8443` (be sure to include the port!).\n\n');
+* **$OPENSHIFT_MASTER** - When you see this variable, replace it with the value of your own OpenShift master hostname/port, such \
+as `https://master.openshift.com:8443` (be sure to include the port!).\n\n \
+* **$ROUTE_SUFFIX** - When you see this variable, replace it with the value of your own OpenShift default routing suffix. \
+For example, if you see `http://coolstore-dev.$ROUTE_SUFFIX` then you would replace this with `http://coolstore-dev.apps.mycompany.com` \
+assuming your OpenShift cluster uses a default routing suffix of `apps.mycompany.com`.\n\n');
 
 var prereqs = fs.readFileSync("prereqs.md");
 
@@ -69,7 +72,7 @@ function filter_katacoda(input) {
     .replace(/{{execute.*}}/g, '')
     .replace(/{{open}}/g, '')
     .replace(/{{open}}/g, '')
-    .replace(/\[\/\/]:\s*#\sCDK\s*/g, '')
+    .replace(/\[\/\/]:\s*#\s\(CDK\s*(.*)\)/g, '$1')
     .replace(/\s+[cC]lick\s+\*\*[cC]opy [tT]o [eE]ditor\*\*\s+/, ' Open the file ')
     .replace(/[cC]lick.* here to open/g, 'Open')
     .replace(/<pre.*>/g, '```java')
@@ -77,10 +80,10 @@ function filter_katacoda(input) {
     .replace(/```console/g, '```')
     .replace(/--server https:\/\/master:8443/g, '')
     .replace(/\[(.*)]\(https:\/\/\[\[HOST_SUBDOMAIN]]-8443-\[\[KATACODA_HOST]].environments.katacoda.com(.*)\)/g, '$1 at \n\n`https://$OPENSHIFT_MASTER$2`')
-    .replace(/\[(.*)]\(http:\/\/(.*)\[\[HOST_SUBDOMAIN]]-80-\[\[KATACODA_HOST]].environments.katacoda.com(.*)\)/g, '$1 at \n\n`http://$2$OPENSHIFT_MASTER$3`')
+    .replace(/\[(.*)]\(http:\/\/(.*)\[\[HOST_SUBDOMAIN]]-80-\[\[KATACODA_HOST]].environments.katacoda.com(.*)\)/g, '$1 at \n\n`http://$2$ROUTE_SUFFIX$3`')
 
     .replace(/https:\/\/\[\[HOST_SUBDOMAIN]]-8443-\[\[KATACODA_HOST]].environments.katacoda.com(.*)\)/g, '\n\n`https://$OPENSHIFT_MASTER$1`')
-    .replace(/http:\/\/(.*)\[\[HOST_SUBDOMAIN]]-80-\[\[KATACODA_HOST]].environments.katacoda.com(.*)\)/g, '$1 at \n\n`http://$1$OPENSHIFT_MASTER$2`')
+    .replace(/http:\/\/(.*)\[\[HOST_SUBDOMAIN]]-80-\[\[KATACODA_HOST]].environments.katacoda.com(.*)\)/g, '$1 at \n\n`http://$1$ROUTE_SUFFIX$2`')
 
     .replace(/\[(.*)]\(https:\/\/\[\[HOST_SUBDOMAIN]]-(.*)-\[\[KATACODA_HOST]].environments.katacoda.com(.*)\)/g, '$1 at \n\n`http://localhost:$2`')
 

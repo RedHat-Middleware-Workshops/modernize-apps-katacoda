@@ -210,7 +210,7 @@ Run these commands to inspect the elements:
 Verify that you can access the monolith by clicking on the
 exposed OpenShift route at 
 
-`http://www-coolstore-dev.$OPENSHIFT_MASTER`
+`http://www-coolstore-dev.$ROUTE_SUFFIX`
 to open up the sample application in a separate browser tab.
 
 You should also be able to see both the CoolStore monolith and its database
@@ -375,7 +375,7 @@ For this workshop, we'll Live synchronize the entire WAR file.
 
 First, click on the Coolstore application link at 
 
-`http://www-coolstore-dev.$OPENSHIFT_MASTER`
+`http://www-coolstore-dev.$ROUTE_SUFFIX`
 to open the application in a browser tab so you can watch changes.
 
 **1. Turn on Live Sync**
@@ -417,7 +417,7 @@ This will update the ROOT.war file and cause the application to change.
 
 Re-visit the app by reloading the Coolstore webpage (or clicking again on the Coolstore application link at 
 
-`http://www-coolstore-dev.$OPENSHIFT_MASTER)`.
+`http://www-coolstore-dev.$ROUTE_SUFFIX)`.
 
 You should now see the red header:
 
@@ -444,7 +444,7 @@ This will update the ROOT.war file again and cause the application to change.
 
 Re-visit the app by reloading the Coolstore webpage (or clicking again on the Coolstore application link at 
 
-`http://www-coolstore-dev.$OPENSHIFT_MASTER)`.
+`http://www-coolstore-dev.$ROUTE_SUFFIX)`.
 
 ![Blue](../../../assets/developer-intro/nav-blue.png)
 
@@ -638,7 +638,7 @@ and notice that the application is now deployed and running!
 
 View the production app **with the blue header from before** is running by clicking: CoolStore Production App at 
 
-`http://www-coolstore-prod.$OPENSHIFT_MASTER` (it may take
+`http://www-coolstore-prod.$ROUTE_SUFFIX` (it may take
 a few moments for the container to deploy fully.)
 
 ## Congratulations!
@@ -723,7 +723,7 @@ And verify that the original black header is visible in the dev application:
 
 * Coolstore - Dev at 
 
-`http://www-coolstore-dev.$OPENSHIFT_MASTER`
+`http://www-coolstore-dev.$ROUTE_SUFFIX`
 
 ![Prod](../../../assets/developer-intro/pipe-orig.png)
 
@@ -731,7 +731,7 @@ While the production application is still blue:
 
 * Coolstore - Prod at 
 
-`http://www-coolstore-prod.$OPENSHIFT_MASTER`
+`http://www-coolstore-prod.$ROUTE_SUFFIX`
 
 ![Prod](../../../assets/developer-intro/nav-blue.png)
 
@@ -772,7 +772,7 @@ Once it completes, verify that the production application has the new change (or
 
 * Coolstore - Prod at 
 
-`http://www-coolstore-prod.$OPENSHIFT_MASTER`
+`http://www-coolstore-prod.$ROUTE_SUFFIX`
 
 ![Prod](../../../assets/developer-intro/pipe-orig.png)
 

@@ -33,7 +33,7 @@ the instructions for installing it and be sure you have access to the `oc` comma
 (e.g. `oc login -u developer -p developer`). You can also use other versions of OpenShift version
 3.7 or later, including [OpenShift Origin](https://www.openshift.org/).
 
-> NOTE: After installing CDK, you must run additional setup outlined in the **Additional CDK Setup** section.
+> NOTE: When using your own OpenShift cluster, you must run additional setup outlined in the **Additional OpenShift Configuration** section.
 
 * [JBoss EAP 7.1.0 GA](https://developers.redhat.com/download-manager/file/jboss-eap-7.1.0.zip) - save the `.zip` file to your ${HOME} directory (it will be used in the first scenario)
 * [OpenJDK 1.8 or later](http://openjdk.java.net/install/) with its `bin` directory on your `$PATH`
@@ -44,7 +44,7 @@ the instructions for installing it and be sure you have access to the `oc` comma
     * Run `git --version` and it should be `2.7.2` or later
 * Various common Linux developer utilities (`unzip`, `curl`, `tree`, etc)
 * A text editor or IDE for editing code
-* [Red Hat Application Migration Toolkit 4.x](https://developers.redhat.com/products/rhamt/download/). Download
+* [Red Hat Application Migration Toolkit 4.0.0.Beta4](https://developers.redhat.com/products/rhamt/download/). Download
 and unzip into the `${HOME}/rhamt-cli-4.0.0.Beta4` directory (you can install it elsewhere, but you'll need
 to specify the path when running the tool during the first lab).
 * A copy of the source code for exercises at `${HOME}/projects` (see below)
@@ -74,12 +74,12 @@ In various places throughout the exercises, commands are run using paths that
 refer to `/root` and `~` and `$HOME` - this directory is the user's home directory and will be different,
 depending on your OS and referred to as `%USER_HOME%` on Windows. You'll need to take care to replace the paths
 appropriately if you've installed the tools and source code in somewhere other than `${HOME}` and
-be sure to replace `$HOME` or `~` with `%USER_HOME%` as needed on Windows.
+be sure to replace `/root`/, `$HOME` or `~` with `%USER_HOME%` as needed on Windows.
 
-## Additional CDK Setup
+## Additional OpenShift Configuration
 
 This lab makes use of OpenShift features and Linux container images available on the Red Hat Container
-Catalog and Docker Hub. To install and configure CDK to use them, run the following command:
+Catalog and Docker Hub. To install and configure OpenShift to use them, run the following commands:
 
 ```bash
 oc login -u system:admin # login as cluster admin

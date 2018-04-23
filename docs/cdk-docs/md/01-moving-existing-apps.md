@@ -704,12 +704,16 @@ First, click on the **OpenShift Console** tab next to the Terminal tab:
 
 This will open a new browser with the openshift console.
 
+> If you running this outside the Katacoda environment, you will need to browse to your $OPENSHIFT_MASTER manually.
+
 ![OpenShift Console](../../../assets/moving-existing-apps/openshift-login.png)
 
 Login using:
 
-* Username `developer`
+* Username: `developer`
 * Password: `developer`
+
+> If you running this outside the Katacoda environment, you will need to login with proper credentials supplied to you ahead of time
 
 You will see the OpenShift landing page:
 
@@ -803,7 +807,7 @@ database and the monolith:
 
 Test the application by clicking on the Route link at 
 
-`http://www-coolstore-dev.$OPENSHIFT_MASTER`,
+`http://www-coolstore-dev.$ROUTE_SUFFIX`,
 which will open the same monolith Coolstore in your browser, this time running on OpenShift:
 
 ![OpenShift Console](../../../assets/moving-existing-apps/route-link.png)

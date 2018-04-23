@@ -206,7 +206,7 @@ Open the application in your browser to make sure it's working:
 
 * Bookinfo Application running with Istio at 
 
-`http://istio-ingress-istio-system.$OPENSHIFT_MASTER/productpage`
+`http://istio-ingress-istio-system.$ROUTE_SUFFIX/productpage`
 
 It should look something like:
 
@@ -260,7 +260,7 @@ The Service Graph addon provides a visualization of the different services and h
 
 * Bookinfo Service Graph (Dotviz) at 
 
-`http://servicegraph-istio-system.$OPENSHIFT_MASTER/dotviz`
+`http://servicegraph-istio-system.$ROUTE_SUFFIX/dotviz`
 
 It should look like:
 
@@ -298,7 +298,7 @@ Open the Prometheus UI:
 
 * Prometheus UI at 
 
-`http://prometheus-istio-system.$OPENSHIFT_MASTER`
+`http://prometheus-istio-system.$ROUTE_SUFFIX`
 
 In the “Expression” input box at the top of the web page, enter the text: `istio_request_count`.
 Then, click the **Execute** button.
@@ -331,7 +331,7 @@ Open the Grafana Dashboard:
 
 * Grafana Dashboard at 
 
-`http://grafana-istio-system.$OPENSHIFT_MASTER/dashboard/db/istio-dashboard`
+`http://grafana-istio-system.$ROUTE_SUFFIX/dashboard/db/istio-dashboard`
 
 ![Grafana graph](../../../assets/resilient-apps/grafana-dash.png)
 
@@ -443,13 +443,13 @@ Now, access the application again in your browser using the below link and reloa
 
 * Bookinfo Application with no rating stars at 
 
-`http://istio-ingress-istio-system.$OPENSHIFT_MASTER/productpage`
+`http://istio-ingress-istio-system.$ROUTE_SUFFIX/productpage`
 
 To verify this, open the Grafana Dashboard:
 
 * Grafana Dashboard at 
 
-`http://grafana-istio-system.$OPENSHIFT_MASTER/dashboard/db/istio-dashboard`
+`http://grafana-istio-system.$ROUTE_SUFFIX/dashboard/db/istio-dashboard`
 
 Scroll down to the `ratings` service and notice that the requests coming from the reviews service have stopped:
 
@@ -479,7 +479,7 @@ This says that for any incoming HTTP request that has a cookie set to the `jason
 
 Now, access the application at 
 
-`http://istio-ingress-istio-system.$OPENSHIFT_MASTER/productpage) and click **Sign In** (at the upper right` and sign in with:
+`http://istio-ingress-istio-system.$ROUTE_SUFFIX/productpage) and click **Sign In** (at the upper right` and sign in with:
 
 * Username: `jason`
 * Password: `jason`
@@ -565,7 +565,7 @@ Notice the `httpFault` element:
 
 Now, access the application at 
 
-`http://istio-ingress-istio-system.$OPENSHIFT_MASTER/productpage` and click **Login** and login with:
+`http://istio-ingress-istio-system.$ROUTE_SUFFIX/productpage` and click **Login** and login with:
 
 * Username: `jason`
 * Password: `jason`
@@ -616,7 +616,7 @@ Now that we've identified and fixed the bug, let's undo our previous testing rou
 
 At this point, we are back to sending all traffic to `reviews:v1`. Access the application at 
 
-`http://istio-ingress-istio-system.$OPENSHIFT_MASTER/productpage`
+`http://istio-ingress-istio-system.$ROUTE_SUFFIX/productpage`
 and verify that no matter how many times you reload your browser, you'll always get no ratings stars, since
 `reviews:v1` doesn't ever access the `ratings` service:
 
@@ -626,7 +626,7 @@ Open the Grafana dashboard and verify that the ratings service is receiving no t
 
 * Grafana Dashboard at 
 
-`http://grafana-istio-system.$OPENSHIFT_MASTER/dashboard/db/istio-dashboard`
+`http://grafana-istio-system.$ROUTE_SUFFIX/dashboard/db/istio-dashboard`
 
 Scroll down to the `reviews` service and observe that all traffic from `productpage` to to `reviews:v2` and
 `reviews:v3` have stopped, and that only `reviews:v1` is receiving requests:
@@ -667,7 +667,7 @@ Open the Grafana dashboard and verify this:
 
 * Grafana Dashboard at 
 
-`http://grafana-istio-system.$OPENSHIFT_MASTER/dashboard/db/istio-dashboard`
+`http://grafana-istio-system.$ROUTE_SUFFIX/dashboard/db/istio-dashboard`
 
 Scroll down to the `reviews` service and observe that half the traffic goes to each of `v1` and `v3` and none goes
 to `v2`:
@@ -677,7 +677,7 @@ to `v2`:
 
 At this point, we see some traffic going to `v3` and are happy with the result. Access the application at 
 
-`http://istio-ingress-istio-system.$OPENSHIFT_MASTER/productpage`
+`http://istio-ingress-istio-system.$ROUTE_SUFFIX/productpage`
 and verify that you either get no ratings stars (`v1`) or _red_ ratings stars (`v3`).
 
 We are now happy with the new version `v3` and want to migrate everyone to it. Execute:
@@ -688,7 +688,7 @@ Once again, open the Grafana dashboard and verify this:
 
 * Grafana Dashboard at 
 
-`http://grafana-istio-system.$OPENSHIFT_MASTER/dashboard/db/istio-dashboard`
+`http://grafana-istio-system.$ROUTE_SUFFIX/dashboard/db/istio-dashboard`
 
 Scroll down to the `reviews` service and observe that all traffic is now going to `v3`:
 
@@ -696,7 +696,7 @@ Scroll down to the `reviews` service and observe that all traffic is now going t
 
 Also, Access the application at 
 
-`http://istio-ingress-istio-system.$OPENSHIFT_MASTER/productpage`
+`http://istio-ingress-istio-system.$ROUTE_SUFFIX/productpage`
 and verify that you always get _red_ ratings stars (`v3`).
 
 ## Congratulations!
@@ -799,7 +799,7 @@ open the Grafana console:
 
 * Grafana Dashboard at 
 
-`http://grafana-istio-system.$OPENSHIFT_MASTER/dashboard/db/istio-dashboard`
+`http://grafana-istio-system.$ROUTE_SUFFIX/dashboard/db/istio-dashboard`
 
 >> **NOTE**: It make take 10-20 seconds before the evidence of the circuit breaker is visible
 within the Grafana dashboard, due to the not-quite-realtime nature of Prometheus metrics and Grafana
@@ -884,7 +884,7 @@ To trigger this, simply access the application:
 
 * Application Link at 
 
-`http://istio-ingress-istio-system.$OPENSHIFT_MASTER/productpage`
+`http://istio-ingress-istio-system.$ROUTE_SUFFIX/productpage`
 
 Reload the webpage 5-10 times (click the reload icon, or press `CMD-R`, or `CTRL-R`) and notice that you
 only see a failure (no stars) ONE time, due to the
@@ -909,7 +909,7 @@ console:
 
 * Prometheus UI at 
 
-`http://prometheus-istio-system.$OPENSHIFT_MASTER`
+`http://prometheus-istio-system.$ROUTE_SUFFIX`
 
 In the “Expression” input box at the top of the web page, enter the text: `envoy_cluster_out_ratings_istio_system_svc_cluster_local_http_version_v1_outlier_detection_ejections_active` and click
 **Execute**. This expression refers to the number of _active ejections_ of pods from the `ratings:v1` destination that have failed more than the value of the `httpConsecutiveErrors` which
@@ -987,7 +987,7 @@ the `ratings` service is subject to a 1qps rate limit. Verify this with Grafana:
 
 * Grafana Dashboard at 
 
-`http://grafana-istio-system.$OPENSHIFT_MASTER/dashboard/db/istio-dashboard`
+`http://grafana-istio-system.$ROUTE_SUFFIX/dashboard/db/istio-dashboard`
 
 Scroll down to the `ratings` service and observe that you are seeing that some of the requests sent
 from `reviews:v3` service to the `ratings` service are returning HTTP Code 429 (Too Many Requests).
@@ -1036,7 +1036,7 @@ Verify that the rate limit is no longer in effect. Open the dashboard:
 
 * Grafana Dashboard at 
 
-`http://grafana-istio-system.$OPENSHIFT_MASTER/dashboard/db/istio-dashboard`
+`http://grafana-istio-system.$ROUTE_SUFFIX/dashboard/db/istio-dashboard`
 
 Notice at the top that the `4xx`s dropped back down to zero.
 
@@ -1091,7 +1091,7 @@ With our application up and our script running to generate loads, visit the Jaeg
 
 * Jaeger Query Dashboard at 
 
-`http://jaeger-query-istio-system.$OPENSHIFT_MASTER`
+`http://jaeger-query-istio-system.$ROUTE_SUFFIX`
 
 ![jager console](../../../assets/resilient-apps/jag-console.png)
 
@@ -1129,7 +1129,7 @@ To see this bug, open the Jaeger tracing console:
 
 * Jaeger Query Dashboard at 
 
-`http://jaeger-query-istio-system.$OPENSHIFT_MASTER`
+`http://jaeger-query-istio-system.$ROUTE_SUFFIX`
 
 Since users of our application were reporting lengthy waits of 5 seconds or more, let's look for traces
 that took at least 5 seconds. Select these options for the query:

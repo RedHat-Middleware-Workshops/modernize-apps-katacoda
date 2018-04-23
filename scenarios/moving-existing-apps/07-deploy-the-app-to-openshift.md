@@ -39,12 +39,16 @@ First, click on the **OpenShift Console** tab next to the Terminal tab:
 
 This will open a new browser with the openshift console.
 
+[//]: # (CDK > If you running this outside the Katacoda environment, you will need to browse to your $OPENSHIFT_MASTER manually.)
+
 ![OpenShift Console](/redhat-middleware-workshops/assets/moving-existing-apps/openshift-login.png)
 
 Login using:
 
-* Username `developer`
+* Username: `developer`
 * Password: `developer`
+
+[//]: # (CDK > If you running this outside the Katacoda environment, you will need to login with proper credentials supplied to you ahead of time)
 
 You will see the OpenShift landing page:
 
