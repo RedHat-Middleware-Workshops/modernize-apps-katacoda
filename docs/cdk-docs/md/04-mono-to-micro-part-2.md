@@ -270,7 +270,7 @@ public void test_readOne() {
     Product product = repository.findById("444434");
     assertThat(product).isNotNull();
     assertThat(product.getName()).as("Verify product name").isEqualTo("Pebble Smart Watch");
-    assertThat(product.getQuantity()).as("Quantity should be ZEOR").isEqualTo(0);
+    assertThat(product.getQuantity()).as("Quantity should be ZERO").isEqualTo(0);
 }
 ```
 

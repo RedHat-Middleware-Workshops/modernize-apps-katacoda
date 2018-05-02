@@ -118,9 +118,9 @@ There are several other sub-pages accessible by the menu near the top. Cick on e
 * **Unparsable** shows all files that RHAMT could not parse in the expected format. For instance, a file with a .xml or .wsdl suffix is assumed to be an XML file. If the XML parser fails, the issue is reported here and also where the individual file is listed.
 * **Dependencies** displays all Java-packaged dependencies found within the application.
 * **Remote Services** Displays all remote services references that were found within the application.
-* **EJBs** vontains a list of EJBs found within the application.
-* **JBPM** vontains all of the JBPM-related resources that were discovered during analysis.
-* **JPA** vontains details on all JPA-related resources that were found in the application.
+* **EJBs** contains a list of EJBs found within the application.
+* **JBPM** contains all of the JBPM-related resources that were discovered during analysis.
+* **JPA** contains details on all JPA-related resources that were found in the application.
 * **About** Describes the current version of RHAMT and provides helpful links for further assistance.
 
 > Some of the above sections may not appear depending on what was detected in the project.
