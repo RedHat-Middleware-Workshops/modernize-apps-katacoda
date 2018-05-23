@@ -12,8 +12,10 @@ The `Router` in Vert.x is very flexible and makes it easy to deal with complex H
 In our example we will only use basic GET, POST and DELETE routing. Let's get started with the GET operations.
 
 **1. Creating a GET /services/cart endpoint**
-First we are going to create a very simple endpoint that returns a `ShopppingCart` object as a JSON String using the `src/main/java/com/redhat/coolstore/utils/Transformers.java`{{open}} to get a `JsonObject` that we can then return as String.
-Add this code at the `//TODO: Add handler for getting a shoppingCart by id` marker:
+First we are going to create a very simple endpoint that returns a `ShopppingCart` object as a JSON String using some
+utility methods from the `src/main/java/com/redhat/coolstore/utils/Transformers.java`{{open}} to get a `JsonObject` that we can then return as String.
+
+Add this code to the `src/main/java/com/redhat/coolstore/CartServiceVerticle.java`{{open}} class at the `//TODO: Add handler for getting a shoppingCart by id` marker:
 
 <pre class="file" data-filename="./src/main/java/com/redhat/coolstore/CartServiceVerticle.java" data-target="insert" data-marker="//TODO: Add handler for getting a shoppingCart by id">
 private void getCart(RoutingContext rc) {
@@ -29,8 +31,8 @@ private void getCart(RoutingContext rc) {
 
 Now let's create a bit more complex implementation that returns many `ShoppingCarts` as a JSON array.
 
-Open the file `src/main/java/com/redhat/coolstore/utils/Transformers.java`{{open}} and
-add this code at the `//TODO: Add handler for getting a list of shoppingCarts` marker:
+Still in file `src/main/java/com/redhat/coolstore/CartServiceVerticle.java`{{open}} add this code at
+the `//TODO: Add handler for getting a list of shoppingCarts` marker:
 
 <pre class="file" data-filename="./src/main/java/com/redhat/coolstore/CartServiceVerticle.java" data-target="insert" data-marker="//TODO: Add handler for getting a list of shoppingCarts">
 private void getCarts(RoutingContext rc) {
@@ -49,11 +51,11 @@ The most important line in this method is this:
 carts.keySet().forEach(cartId ->; cartList.add(Transformers.shoppingCartToJson(carts.get(cartId))));
 ``` 
 
-In this lambda expression we are iterating through the list of shopping carts and transforming them to JsonObject using the ```src/main/java/com/redhat/coolstore/utils/Transformers.java```{{open}} to get a `JsonObject` that we add to a `JsonArray`. We can then return a String encoding of that JsonArray to the response.
+In this lambda expression we are iterating through the list of shopping carts and transforming them to JsonObject using the `Transformers` utility class to get a `JsonObject` that we add to a `JsonArray`. We can then return a String encoding of that JsonArray to the response.
 
-**3. Add a routes**
+**3. Add routes**
 
-Open the `src/main/java/com/redhat/coolstore/CartServiceVerticle.java`{{open}}.
+Open the `src/main/java/com/redhat/coolstore/CartServiceVerticle.java`{{open}} file.
 
 Add the first route by adding the following at `//TODO: Create cart router` marker
 <pre class="file" data-filename="./src/main/java/com/redhat/coolstore/CartServiceVerticle.java" data-target="insert" data-marker="//TODO: Create cart router">
