@@ -49,7 +49,7 @@ You should see:
 
 The various timeout values for the probes can be configured in many ways. Let's tune the _liveness probe_ initial delay so that
 we don't have to wait 3 minutes for it to be activated. Use the **oc** command to tune the
-probe to wait 20 seconds before starting to poll the probe:
+probe to wait 30 seconds before starting to poll the probe:
 
 `oc set probe dc/inventory --liveness --initial-delay-seconds=30`{{execute T1}}
 
