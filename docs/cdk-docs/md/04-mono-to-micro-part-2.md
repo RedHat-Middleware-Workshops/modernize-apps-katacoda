@@ -678,8 +678,7 @@ called [HoverFly](http://hoverfly.io) and particular it's capability to simulate
 to add a `ClassRule` that will simulate all calls to inventory. Open the file to insert the
 code at the `//TODO: Add ClassRule for HoverFly Inventory simulation` marker:
 
-<pre class="file" data-filename="src/test/java/com/redhat/coolstore/service/CatalogEndpointTest.java"
-data-target="insert" data-marker="//TODO: Add ClassRule for HoverFly Inventory simulation">
+```java
 @ClassRule
 public static HoverflyRule hoverflyRule = HoverflyRule.inSimulationMode(dsl(
         service("inventory:8080")
