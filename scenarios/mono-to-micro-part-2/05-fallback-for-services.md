@@ -9,8 +9,7 @@ Open: `src/main/java/com/redhat/coolstore/client/InventoryClient.java`{{open}}
 
 And paste this into it at the `//TODO: Add Fallback factory here` marker:
 
-<pre class="file" data-filename="src/main/java/com/redhat/coolstore/client/InventoryClient.java"
-data-target="insert" data-marker="//TODO: Add Fallback factory here">
+<pre class="file" data-filename="src/main/java/com/redhat/coolstore/client/InventoryClient.java" data-target="insert" data-marker="//TODO: Add Fallback factory here">
 @Component
 static class InventoryClientFallbackFactory implements FallbackFactory&lt;InventoryClient&gt; {
     @Override
@@ -29,8 +28,7 @@ static class InventoryClientFallbackFactory implements FallbackFactory&lt;Invent
 After creating the fallback factory all we have todo is to tell Feign to use that fallback in case of an issue, by adding the fallbackFactory property to the `@FeignClient` annotation. Click **Copy To Editor** to replace
 it for you at the `@FeignClient(name="inventory")` line:
 
-<pre class="file" data-filename="src/main/java/com/redhat/coolstore/client/InventoryClient.java"
-data-target="insert" data-marker="@FeignClient(name=&quot;inventory&quot;)">
+<pre class="file" data-filename="src/main/java/com/redhat/coolstore/client/InventoryClient.java" data-target="insert" data-marker="@FeignClient(name=&quot;inventory&quot;)">
 @FeignClient(name="inventory",fallbackFactory = InventoryClient.InventoryClientFallbackFactory.class)
 </pre>
 

@@ -83,7 +83,8 @@ You should see the following:
  Pebble Smart Watch
  Oculus Rift
  Lytro Camera
-(9 rows)```
+(9 rows)
+```
 
 Don't forget to exit the pod's shell with `exit`{{execute}}
 
