@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 ##
 ## Reset to beginning of Mono-2-Micro part 2
 ## Desired State:

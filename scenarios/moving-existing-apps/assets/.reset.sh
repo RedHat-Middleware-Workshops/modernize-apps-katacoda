@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 ##
 ## Reset to beginning of Moving Existing Apps
 ## Desired State: everything reset

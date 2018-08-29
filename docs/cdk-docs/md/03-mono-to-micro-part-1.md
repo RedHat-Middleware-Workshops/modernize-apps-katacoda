@@ -63,8 +63,6 @@ reused in the new services.
 Run the following commands to set up your environment for this scenario and start in the right directory:
 
 ```sh
-#!/usr/bin/env bash
-
 cd ${HOME}/projects/inventory
 git pull --quiet
 

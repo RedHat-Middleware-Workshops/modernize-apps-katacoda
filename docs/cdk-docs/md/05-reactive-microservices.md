@@ -52,8 +52,6 @@ Eclipse Vert.x is event-driven and non-blocking, which means that applications i
 Run the following commands to set up your environment for this scenario and start in the right directory:
 
 ```sh
-#!/usr/bin/env bash
-
 cd ${HOME}/projects/cart
 git pull --quiet
 

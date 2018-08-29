@@ -56,9 +56,7 @@ Sounds fun, right? Let's get started!
 Run the following commands to set up your environment for this scenario and start in the right directory:
 
 ```sh
-#!/usr/bin/env bash
 cd ${HOME}
-
 ```
 
 ## Install Istio
@@ -1196,8 +1194,6 @@ The contents of these files are used during this scenario exercise. Please refer
 ### File: `install-istio.sh`
 
 ```bash
-#!/usr/bin/env bash
-
 ISTIO_VERSION=0.6.0
 ISTIO_HOME=${HOME}/istio-${ISTIO_VERSION}
 
@@ -1251,8 +1247,6 @@ oc expose svc prometheus
 ### File: `install-sample-app.sh`
 
 ```bash
-#!/usr/bin/env bash
-
 ISTIO_VERSION=0.6.0
 ISTIO_HOME=${HOME}/istio-${ISTIO_VERSION}
 export PATH="$PATH:${ISTIO_HOME}/bin"

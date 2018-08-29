@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 ##
 ## Reset to beginning of Developer Intro
 ## Desired State: monolith solution deployed in "coolstore-dev" project

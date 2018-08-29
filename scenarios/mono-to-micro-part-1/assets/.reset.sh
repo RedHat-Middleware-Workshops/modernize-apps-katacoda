@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+
 
 ##
 ## Reset to beginning of Mono-2-Micro part 1

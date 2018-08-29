@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 ##
 ## Reset to beginning of Reactive Microservices
 ## Desired State:
