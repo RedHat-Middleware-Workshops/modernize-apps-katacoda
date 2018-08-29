@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 echo "Running init commands" |& tee ${HOME}/.init.log
 
 
