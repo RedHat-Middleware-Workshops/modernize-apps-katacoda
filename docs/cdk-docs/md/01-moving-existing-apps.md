@@ -176,7 +176,7 @@ The Dashboard gives an overview of the entire application migration effort. It s
 Red Hat Application Migration Toolkit uses story points to express the level of effort needed to migrate particular application constructs, and the application as a whole.
 The level of effort will vary greatly depending on the size and complexity of the application(s) to migrate.
 
-There are several other sub-pages accessible by the menu near the top. Cick on each one and observe the results for each of these pages:
+There are several other sub-pages accessible by the menu near the top. Click on each one and observe the results for each of these pages:
 
 * **All Applications** Provides a list of all applications scanned.
 * **Dashboard** Provides an overview for a specific application.
