@@ -1,0 +1,48 @@
+{
+  "title": "Monoliths to Microservices: App Transformation Hands-on Workshop",
+  "description": "",
+  "courses": [
+    {
+      "pathway_id": "redhat-middleware-workshops/scenarios",
+      "course_id": "getting-started",
+      "id": "getting-started",
+      "title": "Getting Started with this course"
+    },
+    {
+      "pathway_id": "redhat-middleware-workshops/scenarios",
+      "course_id": "moving-existing-apps",
+      "id": "moving-existing-apps",
+      "title": "Moving existing apps to the cloud"
+    },
+    {
+      "pathway_id": "redhat-middleware-workshops/scenarios",
+      "course_id": "developer-intro",
+      "id": "developer-intro",
+      "title": "A Developer Introduction to OpenShift"
+    },
+    {
+      "pathway_id": "redhat-middleware-workshops/scenarios",
+      "course_id": "mono-to-micro-part-1",
+      "id": "mono-to-micro-part-1",
+      "title": "Transforming an existing monolith (Part 1)"
+    },
+    {
+      "pathway_id": "redhat-middleware-workshops/scenarios",
+      "course_id": "mono-to-micro-part-2",
+      "id": "mono-to-micro-part-2",
+      "title": "Transforming an existing monolith (Part 2)"
+    },
+    {
+      "pathway_id": "redhat-middleware-workshops/scenarios",
+      "course_id": "reactive-microservices",
+      "id": "reactive-microservices",
+      "title": "Building Reactive Microservices"
+    },
+    {
+      "pathway_id": "redhat-middleware-workshops/scenarios",
+      "course_id": "resilient-apps",
+      "id": "resilient-apps",
+      "title": "Prevent and detect issues in a distributed system"
+    }
+  ]
+}
