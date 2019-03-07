@@ -38,7 +38,7 @@ Execute the following commands to wait for the deployment to complete and result
  oc rollout status -w deployment/prometheus && \
  oc rollout status -w deployment/grafana && \
  oc rollout status -w deployment/servicegraph && \
- oc rollout status -w deployment/jaeger-deployment`{{execute}}
+ oc rollout status -w deployment/jaeger`{{execute}}
 
 While you wait for the command to report success you can read a bit more about the [Istio](https://istio.io/docs) architecture below:
 
