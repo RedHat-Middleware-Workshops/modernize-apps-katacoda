@@ -69,7 +69,7 @@ a BOM provided by Red Hat as part of the [Snowdrop](http://snowdrop.me/) project
 </dependencyManagement>
 ```
 
-We use this bill of material to make sure that we are using the version of for example Apache Tomcat that Red Hat supports. 
+We use this bill of material to make sure that we are using the version of for example Apache Tomcat that Red Hat supports.
 
 **Adding web (Apache Tomcat) to the application**
 
@@ -89,12 +89,12 @@ to automatically add these lines at the `<!-- TODO: Add web (tomcat) dependency 
     &lt;/dependency&gt;
 </pre>
 
-We will also make use of Java Persistance API (JPA) so we need to add the following to `pom.xml` at the `<!-- TODO: Add data jpa dependency here -->` marker:
+We will also make use of Spring's JDBC API so we need to add the following to `pom.xml` at the `<!-- TODO: Add jdbc dependency here -->` marker:
 
-<pre class="file" data-filename="pom.xml" data-target="insert" data-marker="<!-- TODO: Add data jpa dependency here -->">
+<pre class="file" data-filename="pom.xml" data-target="insert" data-marker="<!-- TODO: Add jdbc dependency here -->">
     &lt;dependency&gt;
       &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-      &lt;artifactId&gt;spring-boot-starter-data-jpa&lt;/artifactId&gt;
+      &lt;artifactId&gt;spring-boot-starter-data-jdbc&lt;/artifactId&gt;
     &lt;/dependency&gt;
 </pre>
 
@@ -109,12 +109,17 @@ We will go ahead and add a bunch of other dependencies while we have the pom.xml
 
     &lt;dependency&gt;
       &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
-      &lt;artifactId&gt;spring-cloud-starter-feign&lt;/artifactId&gt;
+      &lt;artifactId&gt;spring-cloud-starter-openfeign&lt;/artifactId&gt;
     &lt;/dependency&gt;
 
     &lt;dependency&gt;
       &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
-      &lt;artifactId&gt;spring-cloud-starter-hystrix&lt;/artifactId&gt;
+      &lt;artifactId&gt;spring-cloud-starter-netflix-hystrix&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-cloud-starter-netflix-ribbon&lt;/artifactId&gt;
     &lt;/dependency&gt;
 </pre>
 
@@ -153,9 +158,8 @@ Before moving on, click here: `clear`{{execute interrupt}} to stop the running a
 
 ## Congratulations
 
-You have now successfully executed the first step in this scenario. 
+You have now successfully executed the first step in this scenario.
 
 Now you've seen how to get started with Spring Boot development on Red Hat OpenShift Application Runtimes
 
 In next step of this scenario, we will add the logic to be able to read a list of fruits from the database.
-

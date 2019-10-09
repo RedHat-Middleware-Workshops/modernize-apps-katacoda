@@ -14,12 +14,7 @@ And paste this into it at the `//TODO: Add Fallback factory here` marker:
 static class InventoryClientFallbackFactory implements FallbackFactory&lt;InventoryClient&gt; {
     @Override
     public InventoryClient create(Throwable cause) {
-        return new InventoryClient() {
-            @Override
-            public Inventory getInventoryStatus(@PathVariable("itemId") String itemId) {
-                return new Inventory(itemId,-1);
-            }
-        };
+      return itemId -> new Inventory(itemId, -1);
     }
 }
 
@@ -34,7 +29,7 @@ it for you at the `@FeignClient(name="inventory")` line:
 
 **Test the Fallback**
 
-Now let's see if we can test the fallback. Optimally we should create a different test that fails the request and then verify the fallback value, however in because we are limited in time we are just going to change our test so that it returns a server error and then verify that the test fails. 
+Now let's see if we can test the fallback. Optimally we should create a different test that fails the request and then verify the fallback value, however in because we are limited in time we are just going to change our test so that it returns a server error and then verify that the test fails.
 
 Open ``src/test/java/com/redhat/coolstore/service/CatalogEndpointTest.java``{{open}} and change the following lines:
 
@@ -110,7 +105,6 @@ This shows that the timeout works nicely. However, since we want our test to be 
 ## Congratulations
 You have now successfully executed the fifth step in this scenario.
 
-In this step you've learned how to add Fallback logic to your class and how to add timeout to service calls. 
+In this step you've learned how to add Fallback logic to your class and how to add timeout to service calls.
 
 In the next step we now test our service locally before we deploy it to OpenShift.
-
