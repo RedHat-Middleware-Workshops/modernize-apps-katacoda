@@ -23,13 +23,14 @@ Create the file by clicking: `src/main/resources/application-openshift.propertie
 
 Copy the following content to the file:
 <pre class="file" data-filename="src/main/resources/application-openshift.properties" data-target="replace">
-server.port=8080
 spring.datasource.url=jdbc:postgresql://${project.artifactId}-database:5432/catalog
-spring.datasource.username=catalog
-spring.datasource.password=mysecretpassword
-spring.datasource.driver-class-name=org.postgresql.Driver
+spring.datasource.initialization-mode=always
 
 inventory.ribbon.listOfServers=inventory.inventory.svc.cluster.local:8080
+feign.hystrix.enabled=true
+
+logging.level.root=warn
+logging.level.com.redhat.coolstore=debug
 </pre>
 
 >**NOTE:** The `application-openshift.properties` does not have all values of `application-default.properties`, that is because on the values that need to change has to be specified here. Spring will fall back to `application-default.properties` for the other values.
@@ -64,7 +65,7 @@ to access the sample UI.
 
 The UI will refresh the catalog table every 2 seconds, as before.
 
->**NOTE:** Since we previously have a inventory service running you should now see the actual quantity value and not the fallback value of -1 
+>**NOTE:** Since we previously have a inventory service running you should now see the actual quantity value and not the fallback value of -1
 
 ## Congratulations!
 

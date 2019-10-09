@@ -120,7 +120,7 @@ private JdbcTemplate jdbcTemplate;
 The `JdbcTemplate` require that we provide a `RowMapper`so that it can map between rows in the query to Java Objects. We are going to define the `RowMapper` like this (click to add it):
 
 <pre class="file" data-filename="src/main/java/com/redhat/coolstore/service/ProductRepository.java" data-target="insert" data-marker="//TODO: Add row mapper here">
-private RowMapper&lt;Product&gt; rowMapper = (rs, rowNum) -> new Product(
+private final RowMapper&lt;Product&gt; rowMapper = (rs, rowNum) -> new Product(
         rs.getString("itemId"),
         rs.getString("name"),
         rs.getString("description"),
@@ -148,7 +148,7 @@ The `ProductRepository` should now have all the components, but we still need to
 The Spring Framework has a lot of sane defaults that can always seem magical sometimes, but basically all we have todo to setup the database driver is to provide some configuration values. Open ``src/main/resources/application-default.properties``{{open}} and add the following properties where the comment says "#TODO: Add database properties"
 Click to add it:
 
-<pre class="file" data-filename="src/main/resources/application-default.properties" data-target="insert" data-marker="#TODO: Add database properties"> 
+<pre class="file" data-filename="src/main/resources/application-default.properties" data-target="insert" data-marker="#TODO: Add database properties">
 spring.datasource.url=jdbc:h2:mem:catalog;DB_CLOSE_ON_EXIT=FALSE
 spring.datasource.username=sa
 spring.datasource.password=sa
@@ -163,7 +163,7 @@ The test should be successful and you should see **BUILD SUCCESS**, which means 
 
 ## Congratulations
 
-You have now successfully executed the second step in this scenario. 
+You have now successfully executed the second step in this scenario.
 
 Now you've seen how to use Spring Data to collect data from the database and how to use a local H2 database for development and testing.
 

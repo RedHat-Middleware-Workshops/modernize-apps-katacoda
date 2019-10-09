@@ -1,5 +1,5 @@
 
-Now you are going to create a service class. Later on the service class will be the one that controls the interaction with the inventory service, but for now it's basically just a wrapper of the repository class. 
+Now you are going to create a service class. Later on the service class will be the one that controls the interaction with the inventory service, but for now it's basically just a wrapper of the repository class.
 
 Create a new class `CatalogService` by clicking: ``src/main/java/com/redhat/coolstore/service/CatalogService.java``{{open}}
 
@@ -41,7 +41,7 @@ public class CatalogService {
     public List&lt;Product&gt; readAll() {
         List&lt;Product&gt; productList = repository.readAll();
         //TODO: Update the quantity for the products by calling the Inventory service
-        return productList; 
+        return productList;
     }
 
     //TODO: Add Callback Factory Component
@@ -50,9 +50,9 @@ public class CatalogService {
 }
 </pre>
 
-As you can see there is a number of **TODO** in the code, and later we will use these placeholders to add logic for calling the Inventory Client to get the quantity. However for the moment we will ignore these placeholders. 
+As you can see there is a number of **TODO** in the code, and later we will use these placeholders to add logic for calling the Inventory Client to get the quantity. However for the moment we will ignore these placeholders.
 
-Now we are ready to create the endpoints that will expose REST service. Let's again first start by creating a test case for our endpoint. We need to endpoints, one that exposes for GET calls to `/services/products` that will return all product in the catalog as JSON array, and the second one exposes GET calls to `/services/product/{prodId}` which will return a single Product as a JSON Object. Let's again start by creating a test case. 
+Now we are ready to create the endpoints that will expose REST service. Let's again first start by creating a test case for our endpoint. We need to endpoints, one that exposes for GET calls to `/services/products` that will return all product in the catalog as JSON array, and the second one exposes GET calls to `/services/product/{prodId}` which will return a single Product as a JSON Object. Let's again start by creating a test case.
 
 
 Create the test case by opening: ``src/test/java/com/redhat/coolstore/service/CatalogEndpointTest.java``{{open}}
@@ -140,7 +140,7 @@ Now we are ready to implement the `CatalogEndpoint`.
 
 Start by creating the file by opening: ``src/main/java/com/redhat/coolstore/service/CatalogEndpoint.java``{{open}}
 
-The add the following content: 
+The add the following content:
 
 <pre class="file" data-filename="src/main/java/com/redhat/coolstore/service/CatalogEndpoint.java" data-target="replace">
 package com.redhat.coolstore.service;
@@ -149,28 +149,23 @@ import java.util.List;
 
 import com.redhat.coolstore.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping("/services")
 public class CatalogEndpoint {
 
     @Autowired
     private CatalogService catalogService;
 
-    @ResponseBody
     @GetMapping("/products")
-    public ResponseEntity&lt;List&lt;Product&gt;&gt; readAll() {
-        return new ResponseEntity&lt;List&lt;Product&gt;&gt;(catalogService.readAll(),HttpStatus.OK);
+    public List&lt;Product&gt; readAll() {
+        return this.catalogService.readAll();
     }
 
-    @ResponseBody
     @GetMapping("/product/{id}")
-    public ResponseEntity&lt;Product&gt; read(@PathVariable("id") String id) {
-        return new ResponseEntity&lt;Product&gt;(catalogService.read(id),HttpStatus.OK);
+    public Product read(@PathVariable("id") String id) {
+        return this.catalogService.read(id);
     }
 
 }
@@ -212,9 +207,9 @@ You should now see an HTML page that looks like this:
 
 ## Congratulations
 
-You have now successfully executed the third step in this scenario. 
+You have now successfully executed the third step in this scenario.
 
-Now you've seen how to create REST application in Spring MVC and create a simple application that returns product. 
+Now you've seen how to create REST application in Spring MVC and create a simple application that returns product.
 
 In the next scenario we will also call another service to enrich the endpoint response with inventory status.
 
@@ -226,4 +221,3 @@ click `clear`{{execute T1 interrupt}} to do it for you).
 ## Congratulations!
 
 Next, we'll add a call to the existing Inventory service to enrich the above data with Inventory information. On to the next challenge!
-
